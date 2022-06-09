@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "colName": "dev",
+    "created": "2022-06-08T20:55:45.689Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+        "name": "financas",
+        "containerId": "",
+        "created": "2022-06-08T20:56:00.161Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "06222c6c-c1e2-4491-a76c-203b94a4a75e",
+        "name": "projeto",
+        "containerId": "",
+        "created": "2022-06-09T22:17:11.439Z",
+        "sortNum": 20000
+      }
+    ]
+  }
+]
