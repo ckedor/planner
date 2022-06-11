@@ -26,7 +26,3 @@ class Gasto(models.Model):
     
     def __str__(self):
         return f"{self.data} - {self.valor} - {self.sub_categoria.categoria.nome}"
-    
-
-
-

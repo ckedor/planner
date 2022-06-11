@@ -1,1 +1,0 @@
-SELECT * FROM public.financas_gasto;

@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'rest_framework.authtoken',
     'rest_framework',
     'financas'
@@ -88,5 +89,13 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:3000'
 ]
+DEFAULT_PERMISSION_CLASSES= ['rest_framework.permissions.IsAuthenticated']
+if DEBUG:
+    DEFAULT_PERMISSION_CLASSES = []
+    
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': DEFAULT_PERMISSION_CLASSES,
+    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 django_heroku.settings(locals())

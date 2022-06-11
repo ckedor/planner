@@ -12,9 +12,9 @@ class SubCategoriaInline(admin.TabularInline):
 
 class GastoAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['valor', 'data', 'sub_categoria']})
+        (None, {'fields': ['user', 'descricao', 'valor', 'data', 'sub_categoria']})
     ]
-    list_display = ('data', 'valor', 'sub_categoria')
+    list_display = ('data', 'descricao', 'valor', 'sub_categoria')
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'sub_categoria':

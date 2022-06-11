@@ -2,49 +2,47 @@ import datetime
 from rest_framework import viewsets, permissions, authentication
 from financas.models import CategoriaGasto, Gasto, SubCategoriaGasto
 from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, SubCategoriaGastoSerializer
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAdminUser
 
 class CategoriaGastoViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAdminUser,)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = CategoriaGastoSerializer
     queryset = CategoriaGasto.objects.all()
     
 class SubCategoriaGastoViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAdminUser,)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = SubCategoriaGastoSerializer
     queryset = SubCategoriaGasto.objects.all()
     
 class GastoViewSet(viewsets.ModelViewSet):
-    serializer_class = GastoGetSerializer
+    authentication_classes = (TokenAuthentication,)
     queryset = Gasto.objects.all()
     
     def get_queryset(self):
-        user = self.request.user
-        return Gasto.objects.filter(user=user)
+        user_id = self.request.user.id
+        month = self.request.query_params.get('month', None)
+        
+        queryset = Gasto.objects.filter(user_id=user_id)
+        if month:
+            month = datetime.datetime.strptime(month, "%m/%Y")
+            queryset = queryset.filter(data__year = month.year,
+                            data__month = month.month)
+        
+        return queryset
     
     def get_serializer_class(self):
         if self.action == 'create' or self.action == 'update':
             return GastoCreateSerializer
         return GastoGetSerializer
     
-class GastosOnCurrentMonth(APIView):
-    
-    required_params = ['mes']
-    
-    def get(self, request, format=None):
-        for param in self.required_params:
-            if param not in request.query_params:
-                return Response(data={"Message":f"Informe o {param}"}, status=400)
-            
-        month = request.query_params['mes']
+    # from rest_framework.decorators import action
+    # @action(methods=['GET'], detail=True) # /financas/gastos/
+    # def action(self, request, pk=None):
+    #     pass
         
-        try:
-            requested_month = datetime.datetime.strptime(month, "%m/%Y")
-        except:
-            return Response(data={"Message":"Erro ao informar o mês"}, status=400)
-        
-        gastos = Gasto.objects.filter(data__year = requested_month.year,
-                                      data__month = requested_month.month)
-        serializer = GastoGetSerializer(gastos, many=True)
-        return Response(serializer.data)
     
     

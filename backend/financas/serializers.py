@@ -30,10 +30,15 @@ class GastoGetSerializer(serializers.HyperlinkedModelSerializer):
     sub_categoria = SubCategoriaSerializer()
     class Meta:
         model = Gasto
-        fields = ['id', 'data', 'valor', 'sub_categoria']
+        fields = ['id', 'descricao', 'data', 'valor', 'sub_categoria']
 
-class GastoCreateSerializer(serializers.HyperlinkedModelSerializer):
+class GastoCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Gasto
-        fields = ['id', 'user', 'descricao', 'data', 'valor', 'sub_categoria']
+        fields = ['id', 'descricao', 'data', 'valor', 'sub_categoria']
+        
+    def create(self, validated_data):
+        validated_data["user"] = self.context["request"].user
+        gasto = Gasto.objects.create(**validated_data)
+        return gasto
