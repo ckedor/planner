@@ -1,0 +1,39 @@
+.navbar-brand{
+    margin-left: 15px;
+}
+
+
+.navbar-logout{
+    margin-right: 20px;
+}
+
+.navbar-logout-button {
+    text-decoration: none;
+    color:azure
+}
+
+.navbar-logout-button:hover,
+.navbar-logout-button:hover .navbar-logout-icon{
+    text-decoration: none;
+    color:rgb(156, 156, 156);
+}
+
+.navbar-logout-button:active {
+    box-shadow: none;
+    outline: none;
+}
+
+.navbar-logout-icon{
+    color:azure;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out;
+}
+
+.navbar-user{
+    margin-right: 10px;
+}
+
+.navbar-user-icon{
+    position: relative;
+    bottom: 1px;
+    right: 1px;
+}
