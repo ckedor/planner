@@ -1,7 +1,7 @@
 import { Component } from 'react'
-import { Outlet } from 'react-router-dom';
-import LoginRequired from '../login_required/login_required.component'
-import NavbarComponent from '../navbar/navbar.component';
+import { Outlet, Navigate } from 'react-router-dom';
+import NavbarComponent from '../navbar/navbar.component'
+import config from '../../config'
 
 class LoggedArea extends Component {
 
@@ -22,8 +22,7 @@ class LoggedArea extends Component {
   }
 
   getUser(token){
-        var url = 'http://127.0.01:8000/users/current_user';
-        console.log(token)
+        const url = config.API_URL + 'users/current_user';
         const requestOptions = {
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + token}
         };
@@ -39,9 +38,6 @@ class LoggedArea extends Component {
                 if (data){
                     this.setState({user:data})
                 }
-                else{
-                    
-                }
             }
             );
     }
@@ -50,13 +46,16 @@ class LoggedArea extends Component {
     const { handleLogout } = this;
     const { user } = this.state;
 
-    if (localStorage.getItem('token') && !user ){
-      this.getUser(localStorage.getItem('token'))
-    }
+    const token = localStorage.getItem('token')
 
+    if (!token){
+      return <Navigate to="/login" replace />;
+    }
+    if (token && !user ){
+      this.getUser(token)
+    }
     return (
       <div>
-        <LoginRequired></LoginRequired>
         <NavbarComponent 
           handleLogout={handleLogout}
           loggedIn={true} 

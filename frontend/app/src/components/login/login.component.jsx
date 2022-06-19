@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import NavbarComponent from "../navbar/navbar.component";
 import './login.css'
 import { Navigate } from "react-router-dom";
+import config from '../../config'
 
 class LoginComponent extends Component {
 
@@ -13,8 +14,7 @@ class LoginComponent extends Component {
         this.state = {
             username: '',
             password: '',
-            token: '', 
-            user: '',
+            token: '',
             showPasswordError: false
         }
     }
@@ -28,7 +28,7 @@ class LoginComponent extends Component {
     }
 
     handleSubmit = (event) => {
-        var url = 'http://127.0.01:8000/auth/';
+        const url = config.API_URL + 'auth/';
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -37,7 +37,6 @@ class LoginComponent extends Component {
         fetch(url, requestOptions)
             .then((response) => {
                 if (response.ok){
-                    console.log(response)
                     return response.json()
                 } 
                 else 
@@ -66,7 +65,7 @@ class LoginComponent extends Component {
         const token = localStorage.getItem('token')
 
         if (token){
-            return <Navigate to="/logged_area" state={{token}} replace />;
+            return <Navigate to="/logged_area" replace />;
         } else {
             return(
                 <div>
