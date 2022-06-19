@@ -94,7 +94,8 @@ STATIC_ROOT = 'static/'
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'https://multi-planner-front.herokuapp.com/'
 ]
 
 DEFAULT_PERMISSION_CLASSES= ['rest_framework.permissions.IsAuthenticated']
