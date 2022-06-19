@@ -5,7 +5,7 @@ import django_heroku
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://multi-planner-api.herokuapp.com/']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -55,13 +55,16 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': config('DATABASE_HOST'),
-        'PORT': '5432'
+        'NAME': 'multiplanner',
+        'USER': 'postgres',
+        'PASSWORD': 'roots',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
+
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
