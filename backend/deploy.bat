@@ -1,2 +1,2 @@
 cd ..
-git subtree --prefix=backend push planner-api main
+git subtree --prefix=backend push back main
