@@ -2,7 +2,7 @@ import { Component } from "react";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import NavbarComponent from "../navbar/navbar.component";
-import './login.css'
+import './login.scss'
 import { Navigate } from "react-router-dom";
 import config from '../../config'
 
