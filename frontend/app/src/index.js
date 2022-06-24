@@ -3,21 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoggedArea from './components/logged-area/logged-area.component';
-import LoginComponent from './components/login/login.component';
+import Dashboard from './routes/dashboard/dashboard.component';
+import Login from './routes/login/login.component';
+import Financas from './routes/dashboard/financas/financas.component';
+import { AuthProvider}  from './context/auth.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginComponent />} />
-        <Route path="/logged_area" element={<LoggedArea />}>
-          <Route path="/logged_area/" element={<div>Página Protegida Inicial</div>} />
-        </Route>
-        <Route path="/" element={<div>Página Pública Inicial</div>}></Route>
-      </Routes>
-    </BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route index element={<div>DashboardInicialPage</div>} />
+            <Route path="/dashboard/financas" element={<Financas />}>
+              <Route index element={<div>FinancasPáginaInicial</div>} />
+            </Route>
+          </Route>
+          <Route path="/" element={<div>Página Pública Inicial</div>}></Route>
+        </Routes>
+      </AuthProvider>
+      </BrowserRouter>
   </React.StrictMode>
 );
 

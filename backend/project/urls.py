@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
-from rest_framework.authtoken import views
 
 from financas.viewsets import CategoriaGastoViewSet, GastoViewSet, SubCategoriaGastoViewSet
-from project.viewsets import UserViewSet
+from rest_framework_simplejwt.views import TokenRefreshView
+from .viewsets import UserViewSet, CustomTokenObtainPairView
 
 
 router = routers.DefaultRouter()
@@ -15,7 +15,8 @@ router.register(r'financas/sub_categorias_gasto', SubCategoriaGastoViewSet)
 router.register(r'financas/gastos', GastoViewSet, basename='Gasto')
 
 urlpatterns = [
-    path('', include(router.urls)), 
+    path('', include(router.urls)),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), 
     path('admin/', admin.site.urls),
-    path('auth/', views.obtain_auth_token, name='auth'),
 ]
