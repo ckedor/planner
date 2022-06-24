@@ -19,9 +19,11 @@ const NavbarComponent = () => {
             PLANNER
             </Navbar.Brand>
             <Navbar.Collapse>
+                {user &&
                 <Nav className="me-auto">
                     <Link to="/dashboard/financas" className="nav-link">Finanças</Link>
                 </Nav>
+                }
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
                 <Nav

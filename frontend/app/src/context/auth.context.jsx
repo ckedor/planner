@@ -36,7 +36,7 @@ export const AuthProvider = ({children}) => {
                     return response.json()
                 }
                 else {
-                    alert("Erro ao buscar o token na API")
+                    
                 }
             })
             .then(data => {
@@ -113,8 +113,8 @@ export const AuthProvider = ({children}) => {
             }
         }, fourMinutes)
         return () => clearInterval(interval)
-
-    }, [authTokens, loading])
+    
+    }, [authTokens, loading]) // eslint-disable-line
     
 
     return(
