@@ -1,25 +1,20 @@
 import datetime
-from rest_framework import viewsets, permissions, authentication
+from rest_framework import viewsets
 from financas.models import CategoriaGasto, Gasto, SubCategoriaGasto
 from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, SubCategoriaGastoSerializer
-from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAdminUser
 
 class CategoriaGastoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
-    authentication_classes = (TokenAuthentication,)
     serializer_class = CategoriaGastoSerializer
     queryset = CategoriaGasto.objects.all()
     
 class SubCategoriaGastoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
-    authentication_classes = (TokenAuthentication,)
     serializer_class = SubCategoriaGastoSerializer
     queryset = SubCategoriaGasto.objects.all()
     
 class GastoViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
     queryset = Gasto.objects.all()
     
     def get_queryset(self):

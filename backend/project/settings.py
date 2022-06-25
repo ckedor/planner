@@ -99,18 +99,6 @@ CORS_ORIGIN_WHITELIST = [
     'https://multi-planner-front.herokuapp.com'
 ]
 
-DEFAULT_PERMISSION_CLASSES= ['rest_framework.permissions.IsAuthenticated']
-if DEBUG:
-    DEFAULT_PERMISSION_CLASSES = []
-    
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': DEFAULT_PERMISSION_CLASSES,
-    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 15,
-    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication']
-}
-
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
@@ -118,5 +106,17 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
 }
+    
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15,
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication']
+}
+
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = []
+    SIMPLE_JWT["BLACKLIST_AFTER_ROTATION"] = False
 
 django_heroku.settings(locals())
