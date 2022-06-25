@@ -77,6 +77,7 @@ export const AuthProvider = ({children}) => {
                 if (data){
                     setAuthTokens(data)
                     setUser(jwt_decode(data.access))
+                    console.log("Refresh Token")
                     localStorage.setItem('authTokens', JSON.stringify(data))
                 }
                 else{
@@ -106,7 +107,7 @@ export const AuthProvider = ({children}) => {
             updateToken()
         }
 
-        let fourMinutes = 1000 * 60 * 4
+        let fourMinutes = 1000 * 4 * 60
         let interval = setInterval(() => {
             if(authTokens){
                 updateToken()

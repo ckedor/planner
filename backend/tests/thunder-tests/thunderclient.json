@@ -8,7 +8,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-06-08T20:56:22.350Z",
-    "modified": "2022-06-10T21:18:53.692Z",
+    "modified": "2022-06-24T20:03:54.148Z",
     "headers": [
       {
         "name": "Authorization",
@@ -27,7 +27,7 @@
         },
         {
           "name": "descricao",
-          "value": "descricao muito legal mesmo"
+          "value": "violeta"
         },
         {
           "name": "data",
@@ -35,7 +35,7 @@
         },
         {
           "name": "valor",
-          "value": "14"
+          "value": "34.90"
         },
         {
           "name": "sub_categoria",
@@ -43,7 +43,8 @@
         },
         {
           "name": "id",
-          "value": "1239"
+          "value": "1239",
+          "isDisabled": true
         }
       ]
     },

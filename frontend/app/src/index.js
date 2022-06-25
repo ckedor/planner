@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import Dashboard from './routes/dashboard/dashboard.component';
 import Login from './routes/login/login.component';
 import Financas from './routes/dashboard/financas/financas.component';
 import { AuthProvider}  from './context/auth.context';
+import Gastos from './routes/dashboard/financas/gastos/gastos.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,10 +20,11 @@ root.render(
           <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<div>DashboardInicialPage</div>} />
             <Route path="/dashboard/financas" element={<Financas />}>
-              <Route index element={<div>FinancasPáginaInicial</div>} />
+              <Route index element={<Gastos />} />
+              <Route path='/dashboard/financas/patrimonio' element={<div>patrimonio</div>} />
             </Route>
           </Route>
-          <Route path="/" element={<div>Página Pública Inicial</div>}></Route>
+          <Route path="/" element={<Navigate to="/dashboard" replace />}></Route>
         </Routes>
       </AuthProvider>
       </BrowserRouter>
