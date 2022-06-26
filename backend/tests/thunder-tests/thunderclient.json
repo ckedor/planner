@@ -83,18 +83,31 @@
     "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
     "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
     "name": "/gastos",
-    "url": "http://127.0.0.1:8000/financas/gastos/9",
+    "url": "http://127.0.0.1:8000/financas/gastos/por_categoria?month=06/2022",
     "method": "GET",
     "sortNum": 5000,
     "created": "2022-06-10T20:12:44.167Z",
-    "modified": "2022-06-10T21:08:25.830Z",
+    "modified": "2022-06-25T15:27:05.000Z",
     "headers": [
       {
         "name": "Authorization",
         "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de"
       }
     ],
-    "params": [],
+    "params": [
+      {
+        "name": "month",
+        "value": "06/2022",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "admin",
+        "password": "senhafacil"
+      }
+    },
     "tests": []
   },
   {
@@ -111,6 +124,26 @@
       {
         "name": "Authorization",
         "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de"
+      }
+    ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "098c2f88-113b-4ba0-ba17-a5b19b98271e",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+    "name": "/gastos/get_gastos_por_categoria",
+    "url": "http://127.0.0.1:8000/financas/gastos",
+    "method": "GET",
+    "sortNum": 8750,
+    "created": "2022-06-25T14:12:38.572Z",
+    "modified": "2022-06-25T14:22:41.399Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de",
+        "isDisabled": true
       }
     ],
     "params": [],

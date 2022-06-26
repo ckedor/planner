@@ -3,6 +3,9 @@ from rest_framework import viewsets
 from financas.models import CategoriaGasto, Gasto, SubCategoriaGasto
 from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, SubCategoriaGastoSerializer
 from rest_framework.permissions import IsAdminUser
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.db.models import F, Sum
 
 class CategoriaGastoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
@@ -24,8 +27,8 @@ class GastoViewSet(viewsets.ModelViewSet):
         queryset = Gasto.objects.filter(user_id=user_id)
         if month:
             month = datetime.datetime.strptime(month, "%m/%Y")
-            queryset = queryset.filter(data__year = month.year,
-                            data__month = month.month)
+            queryset = queryset.filter(data__year = month.year, 
+                                       data__month = month.month)
         
         return queryset
     
@@ -34,10 +37,25 @@ class GastoViewSet(viewsets.ModelViewSet):
             return GastoCreateSerializer
         return GastoGetSerializer
     
-    # from rest_framework.decorators import action
-    # @action(methods=['GET'], detail=True) # /financas/gastos/
-    # def action(self, request, pk=None):
-    #     pass
+    @action(methods=['GET'], detail=False)
+    def por_categoria(self, request, pk=None):
+        user_id = request.user.id
+        gastos = Gasto.objects.filter(user_id=user_id)
+        month = request.query_params.get('month', None)
+
+        if month:
+            month = datetime.datetime.strptime(month, "%m/%Y")
+            gastos.filter(data__year = month.year, 
+                            data__month = month.month)
+        
+        gastos = gastos.values(subcategoria=F('sub_categoria__nome'),
+                               categoria=F('sub_categoria__categoria__nome'))\
+                       .annotate(total=Sum('valor'))\
+                       .order_by()
+                       
+        return Response(list(gastos))
+        
+        
         
     
     
