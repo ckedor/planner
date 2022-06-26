@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import APIService from "../../../../http";
+import { dateToString } from "../../../../utils/utils";
+import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-chart";
 
 const Gastos = () => {
 
     const apiService = new APIService()
-    const [gastos, setGastos] = useState(null)
+    const [gastosPorCategoria, setGastosPorCategoria] = useState(null)
+    const [selectedMonth, setSelectedMonth ] = useState(dateToString(new Date(), "MM/YYYY"))
 
-    useEffect(() => {
-        apiService.get("financas/gastos")
+    const getGastosPorCategoriaMonth = () => {
+        apiService.get("financas/gastos/por_categoria", { month: selectedMonth })
             .then(response => {
                 if (response.status === 200) {
                     return response.data
@@ -15,15 +18,17 @@ const Gastos = () => {
                 alert("Erro ao pegar gastos")
             })
             .then(data => {
-                setGastos(data.results)
+                setGastosPorCategoria(data)
             })
+    }
+
+    useEffect(() => {
+        getGastosPorCategoriaMonth()
     }, []) // eslint-disable-line
 
     return (
         <div>
-            {gastos?.map((gasto) =>{
-                return <div key={gasto.id}>{gasto.descricao}</div> 
-            })}
+            <GastosPieChart gastos={gastosPorCategoria}></GastosPieChart>
         </div>
     );
 };
