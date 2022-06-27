@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import APIService from "../../../../http";
 import { dateToString } from "../../../../utils/utils";
 import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-chart";
+import GastosBarChart from "../../../../components/gastos-bar-chart/gastos-bar-chart";
 
 const Gastos = () => {
 
     const apiService = new APIService()
     const [gastosPorCategoria, setGastosPorCategoria] = useState(null)
+    const [gastosPorSubCategoria, setGastosPorSubCategoria] = useState(null)
     const [selectedMonth, setSelectedMonth ] = useState(dateToString(new Date(), "MM/YYYY"))
 
     const getGastosPorCategoriaMonth = () => {
@@ -19,6 +21,7 @@ const Gastos = () => {
             })
             .then(returnData => {
                 setGastosPorCategoria(returnData.gastos_por_categoria)
+                setGastosPorSubCategoria(returnData.gastos_por_subcategoria)
             })
     }
 
@@ -29,6 +32,7 @@ const Gastos = () => {
     return (
         <div>
             <GastosPieChart chartData={gastosPorCategoria}></GastosPieChart>
+            <GastosBarChart ></GastosBarChart>
         </div>
     );
 };
