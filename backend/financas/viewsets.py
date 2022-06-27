@@ -48,12 +48,22 @@ class GastoViewSet(viewsets.ModelViewSet):
             gastos.filter(data__year = month.year, 
                             data__month = month.month)
         
-        gastos = gastos.values(subcategoria=F('sub_categoria__nome'),
-                               categoria=F('sub_categoria__categoria__nome'))\
-                       .annotate(total=Sum('valor'))\
-                       .order_by()
-                       
-        return Response(list(gastos))
+        gastos_json = GastoGetSerializer(gastos, many=True).data
+        
+        gastos_por_subcategoria = gastos.values(subcategoria=F('sub_categoria__nome'),
+                                                categoria=F('sub_categoria__categoria__nome'))\
+                                        .annotate(gastoTotal=Sum('valor'))\
+                                        .order_by('categoria', 'subcategoria')
+        
+        gastos_por_categoria = gastos.values(categoria=F('sub_categoria__categoria__nome'))\
+                                            .annotate(gastoTotal=Sum('valor'))\
+                                            .order_by('categoria')
+        
+        response = {"gastos":gastos_json, 
+                    "gastos_por_subcategoria":gastos_por_subcategoria,
+                    "gastos_por_categoria":gastos_por_categoria}
+        
+        return Response(response)
         
         
         

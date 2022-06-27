@@ -14,7 +14,7 @@ class CategoriaGastoSerializer(serializers.HyperlinkedModelSerializer):
         model = CategoriaGasto
         fields = ['id', 'nome', 'sub_categorias']    
         
-class GastoGetSerializer(serializers.HyperlinkedModelSerializer):
+class GastoGetSerializer(serializers.ModelSerializer):
     
     class SubCategoriaSerializer(serializers.HyperlinkedModelSerializer):
         class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
