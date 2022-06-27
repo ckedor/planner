@@ -17,8 +17,8 @@ const Gastos = () => {
                 }
                 alert("Erro ao pegar gastos")
             })
-            .then(data => {
-                setGastosPorCategoria(data)
+            .then(returnData => {
+                setGastosPorCategoria(returnData.gastos_por_categoria)
             })
     }
 
@@ -28,15 +28,7 @@ const Gastos = () => {
 
     return (
         <div>
-            <GastosPieChart chartData={[
-                {categoria: "Academia", gastoTotal: 2000},
-                {categoria: "Saúde", gastoTotal: 1200},
-                {categoria: "Alimentacao", gastoTotal: 1000},
-                {categoria: "Moradia", gastoTotal: 500},
-                {categoria: "Contas", gastoTotal: 400},
-                {categoria: "Outros", gastoTotal: 400},
-                {categoria: "Outros2", gastoTotal: 140},
-            ]}></GastosPieChart>
+            <GastosPieChart chartData={gastosPorCategoria}></GastosPieChart>
         </div>
     );
 };
