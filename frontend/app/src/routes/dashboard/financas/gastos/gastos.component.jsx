@@ -28,7 +28,15 @@ const Gastos = () => {
 
     return (
         <div>
-            <GastosPieChart gastos={gastosPorCategoria}></GastosPieChart>
+            <GastosPieChart chartData={[
+                {categoria: "Academia", gastoTotal: 2000},
+                {categoria: "Saúde", gastoTotal: 1200},
+                {categoria: "Alimentacao", gastoTotal: 1000},
+                {categoria: "Moradia", gastoTotal: 500},
+                {categoria: "Contas", gastoTotal: 400},
+                {categoria: "Outros", gastoTotal: 400},
+                {categoria: "Outros2", gastoTotal: 140},
+            ]}></GastosPieChart>
         </div>
     );
 };

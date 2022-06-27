@@ -1,14 +1,55 @@
 
+import { Button } from 'bootstrap';
 import { useEffect, useState } from 'react';
-import { HorizontalGridLines, LineSeries, VerticalGridLines, XAxis, XYPlot, YAxis } from 'react-vis';
+import ReactApexChart from 'react-apexcharts';
+import { RadialChart } from 'react-vis';
 import { sort, sortMultiple } from '../../utils/utils';
 import './gastos-pie-chart.scss'
 
-const GastosPieChart = ({gastos}) => {
+const GastosPieChart = ({chartData}) => {
+    
+    const [options, setOptions] = useState({})
+    const [series, setSeries] = useState([])
 
-    // const [seriesArray, setSeriesArray] = useState(null)
-    // const [labelsArray, setLabelsArray] = useState(null)
-    // const [options, setOptions ] = useState(null)
+    useEffect( () =>{
+        mountChart();
+    }, [chartData]);
+
+    const mountChart = () => {
+        setSeries(chartData.map(obj => obj.gastoTotal))
+        const labels = chartData.map(obj => obj.categoria)
+        setOptions( {
+            chart: {
+                width: 380,
+                type: 'pie',
+            },
+            labels: labels,
+            dataLabels:{
+                enabled: true,
+                style:{
+                    colors: ['#2C2C2C'],
+                },
+                dropShadow: {
+                    enabled: false,
+                },
+                formatter: function (val, opts) {
+                    return [opts.w.config.labels[opts.seriesIndex], parseInt(val) + "%"]
+                }
+            },
+            colors: ['#DA7E7E', '#DAB37E', '#DADA7E', '#A6DA7E', '#7EDA9B', '#7EDAC2', '#7EADDA', '#AD7EDA', '#DA7EC9'],
+            legend: {
+                show: false,
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width:400
+                    },
+                }
+            }]
+        })
+    }
 
 
 
@@ -77,28 +118,10 @@ const GastosPieChart = ({gastos}) => {
     //     console.log("mountSubCategoryChartData", categoryData)
     //     setGastoPorSubCategoriaChartData(categoryData)
     // }
-
-    const data = [
-    {x: 0, y: 8},
-    {x: 1, y: 5},
-    {x: 2, y: 4},
-    {x: 3, y: 9},
-    {x: 4, y: 1},
-    {x: 5, y: 7},
-    {x: 6, y: 6},
-    {x: 7, y: 3},
-    {x: 8, y: 2},
-    {x: 9, y: 0}
-    ];
+    
     return (
         <div>
-            <XYPlot height={300} width= {300}>
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <LineSeries data={data} />
-            </XYPlot>
+            <ReactApexChart options={options} series={series} type="pie" width={500}/>
         </div>
     )
 }
