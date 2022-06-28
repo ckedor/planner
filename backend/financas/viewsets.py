@@ -45,7 +45,7 @@ class GastoViewSet(viewsets.ModelViewSet):
 
         if month:
             month = datetime.datetime.strptime(month, "%m/%Y")
-            gastos.filter(data__year = month.year, 
+            gastos = gastos.filter(data__year = month.year, 
                             data__month = month.month)
         
         gastos_json = GastoGetSerializer(gastos, many=True).data
