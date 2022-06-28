@@ -11,6 +11,10 @@ const Gastos = () => {
     const [gastosPorSubCategoria, setGastosPorSubCategoria] = useState(null)
     const [selectedMonth, setSelectedMonth ] = useState(dateToString(new Date(), "MM/YYYY"))
 
+    useEffect(() => {
+        getGastosPorCategoriaMonth()
+    }, []) // eslint-disable-line
+
     const getGastosPorCategoriaMonth = () => {
         apiService.get("financas/gastos/por_categoria", { month: selectedMonth })
             .then(response => {
@@ -25,14 +29,11 @@ const Gastos = () => {
             })
     }
 
-    useEffect(() => {
-        getGastosPorCategoriaMonth()
-    }, []) // eslint-disable-line
 
     return (
         <div>
             <GastosPieChart chartData={gastosPorCategoria}></GastosPieChart>
-            <GastosBarChart ></GastosBarChart>
+            <GastosBarChart chartData={gastosPorSubCategoria}></GastosBarChart>
         </div>
     );
 };
