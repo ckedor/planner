@@ -108,7 +108,6 @@ const GastosBarChart = ({ chartData }) => {
                 })
             }
         })
-        console.log(series)
         return series
     }
     
