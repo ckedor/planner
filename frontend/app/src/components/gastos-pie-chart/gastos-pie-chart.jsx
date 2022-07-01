@@ -53,8 +53,8 @@ const GastosPieChart = ({chartData}) => {
     }
 
     return (
-        <div>
-            <ReactApexChart options={options} series={series} type="pie" width={500}/>
+        <div className="gastos-pie-chart">
+            <ReactApexChart options={options} series={series} type="donut" width={'100%'}/>
         </div>
     )
 }

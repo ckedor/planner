@@ -4,6 +4,8 @@ import { dateToString } from "../../../../utils/utils";
 import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-chart";
 import GastosBarChart from "../../../../components/gastos-bar-chart/gastos-bar-chart";
 import GastosList from "../../../../components/gastos-list/gastos-list";
+import './gastos.scss'
+
 
 const Gastos = () => {
 
@@ -34,14 +36,22 @@ const Gastos = () => {
 
 
     return (
-        <div className="container">
+        <div className="container-xl">
             <div className="row">
-                <div className="col-6">
-                    <GastosList rows={gastos}></GastosList>
+                <div className="col-lg-6 col-md-6 col-sm-12 gastos-charts-wrapper">
+                    <div className="row">
+                        <div className="col-12">
+                            <GastosPieChart chartData={gastosPorCategoria}></GastosPieChart>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <GastosBarChart chartData={gastosPorSubCategoria}></GastosBarChart>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-6">
-                    <GastosPieChart chartData={gastosPorCategoria}></GastosPieChart>
-                    <GastosBarChart chartData={gastosPorSubCategoria}></GastosBarChart>
+                <div className="col-lg-6 col-md-6 col-sm-12 gastos-lists-wrapper">
+                    <GastosList gastosData={gastos}></GastosList>
                 </div>
             </div>
         </div>
