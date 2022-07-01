@@ -13,7 +13,7 @@ const NavbarComponent = () => {
     const {user, logout} = useContext(AuthContext)
 
     return (
-        <Navbar bg="dark py-2" variant="dark">
+        <Navbar fixed="top" bg="dark py-2" variant="dark" className="navbar">
             <Navbar.Brand href="/dashboard" className='navbar-brand'>
                 <img alt="" src={logo} width="26" height="26" className="d-inline-block align-top"/>{' '}
             PLANNER
