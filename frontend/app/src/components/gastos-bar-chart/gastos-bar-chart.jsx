@@ -37,9 +37,6 @@ const GastosBarChart = ({ chartData }) => {
                 width: 1, 
                 colors: ['#fff']
             },
-            title: {
-                text: 'Gastos por Subcategoria'
-            }, 
             dataLabels: {
                 enabled: true,
                 style:{

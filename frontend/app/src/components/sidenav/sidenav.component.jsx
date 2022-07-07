@@ -1,7 +1,14 @@
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar } from "@mui/material"
+import { Box, Drawer, List, ListItem, ListItemText, Toolbar } from "@mui/material"
 import ListItemIcon from '@mui/material/ListItemIcon';
-
+import { Link } from "react-router-dom";
 const SideNav = ({width, items}) =>{
+
+
+    let currentPath = window.location.pathname
+    if (currentPath.slice(-1) === '/'){
+      currentPath = currentPath.slice(0, -1)
+      console.log(currentPath)
+    }
 
     return (
         <Drawer
@@ -16,13 +23,11 @@ const SideNav = ({width, items}) =>{
         <Box sx={{ overflow: 'auto' }}>
           <List>
             {items.map((item, index) => (
-              <ListItem key={item.name} disablePadding>
-                <ListItemButton>
+              <ListItem key={item.name} selected={item.link===currentPath} disablePadding button component={Link} to={item.link}>
                   <ListItemIcon>
                    {item.icon}
                   </ListItemIcon>
                   <ListItemText primary={item.name} />
-                </ListItemButton>
               </ListItem>
             ))}
           </List>

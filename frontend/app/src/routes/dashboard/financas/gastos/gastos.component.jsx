@@ -10,9 +10,7 @@ import './gastos.scss'
 const Gastos = () => {
 
     const apiService = new APIService()
-    const [gastosPorCategoria, setGastosPorCategoria] = useState(null)
-    const [gastosPorSubCategoria, setGastosPorSubCategoria] = useState(null)
-    const [gastos, setGastos] = useState(null)
+    const [gastosData, setGastosData] = useState(null)
     const [selectedMonth, setSelectedMonth ] = useState(dateToString(new Date(), "MM/YYYY"))
 
     useEffect(() => {
@@ -28,30 +26,28 @@ const Gastos = () => {
                 alert("Erro ao pegar gastos")
             })
             .then(returnData => {
-                setGastosPorCategoria(returnData.gastos_por_categoria)
-                setGastosPorSubCategoria(returnData.gastos_por_subcategoria)
-                setGastos(returnData.gastos)
+                setGastosData(returnData)
             })
     }
 
 
     return (
         <div className="container-xl">
-            <div className="row">
+            <div className="row gastos-container">
                 <div className="col-lg-6 col-md-6 col-sm-12 gastos-charts-wrapper">
                     <div className="row">
                         <div className="col-12">
-                            <GastosPieChart chartData={gastosPorCategoria}></GastosPieChart>
+                            <GastosPieChart chartData={gastosData?.gastos_por_categoria}></GastosPieChart>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-12">
-                            <GastosBarChart chartData={gastosPorSubCategoria}></GastosBarChart>
+                            <GastosBarChart chartData={gastosData?.gastos_por_subcategoria}></GastosBarChart>
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 gastos-lists-wrapper">
-                    <GastosList gastosData={gastos}></GastosList>
+                    <GastosList gastosData={gastosData?.gastos}></GastosList>
                 </div>
             </div>
         </div>

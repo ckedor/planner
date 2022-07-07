@@ -6,9 +6,8 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 const Financas = () => {
 
     const sideNavbarWidth = 200
-    const sideNavbarItems = [{name: 'Gastos', link: 'dashboard/financas/gastos', icon: <AttachMoneyIcon />}]
+    const sideNavbarItems = [{name: 'Gastos', link: '/dashboard/financas', icon: <AttachMoneyIcon />}]
 
-    console.log(sideNavbarItems)
     return (
         <Fragment>
             <SideNav width={sideNavbarWidth} items={sideNavbarItems}/>

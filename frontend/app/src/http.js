@@ -19,7 +19,7 @@ class APIService {
             data,
             {
                 params: params,
-                headers :this.headers
+                headers: this.headers
             }
         )
     } 
@@ -30,7 +30,7 @@ class APIService {
             data, 
             { 
                 params: params,
-                headers :this.headers 
+                headers: this.headers 
             }
         )
      }
@@ -40,7 +40,7 @@ class APIService {
             url, 
             { 
                 params: params, 
-                headers :this.headers 
+                headers: this.headers 
             }   
         )
     }
@@ -50,10 +50,11 @@ class APIService {
             url, 
             { 
                 params: params, 
-                headers :this.headers 
+                headers: this.headers 
             }
-            )
-        }
+        )
     }
+
+}
         
-    export default APIService;
+export default APIService;
