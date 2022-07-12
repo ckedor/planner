@@ -6,13 +6,17 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './gastos-list.scss'
 import APIService from '../../http';
 import CreateGastoDialog from './create-gasto-dialog/create-gasto-dialog.component'
+import UpdateGastoDialog from './update-gasto-dialog/update-gasto-dialog.component'
 
-const GastosList = ({gastosData}) => {
+
+const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
 
   const apiService = new APIService()
   const [gastos, setGastos] = useState(gastosData)
   const [categorias, setCategorias] = useState(null)
   const [openCreateGastoDialog, setOpenCreateGastoDialog] = useState(false)
+  const [openUpdateGastoDialog, setOpenUpdateGastoDialog] = useState(false)
+  const [selectedGasto, setSelectedGasto] = useState({valor:0, descricao:"", data: new Date(), sub_categoria: {id:-1, label:""},  categoria: {id:-1, label:""}})
 
   useEffect(() => {
     setGastos(gastosData?.map((obj) => {
@@ -40,7 +44,6 @@ const GastosList = ({gastosData}) => {
       })
       .then(returnData => {
           setCategorias(returnData.results)
-          console.log(returnData.results)
       })
   }
 
@@ -53,13 +56,26 @@ const GastosList = ({gastosData}) => {
           alert("Erro ao criar gasto")
       })
       .then(returnData => {
-        // Implementar Atualização de toda a página
+          handleGastosAPIUpdate()
       })
   }
 
-  const editGasto = (id) =>{
-    
+  const updateGasto = (gasto) => {
+    console.log(gasto)
+    let gastoJSON = {descricao: gasto.descricao, data: gasto.data.toISOString().split('T')[0], valor: gasto.valor, sub_categoria:gasto.sub_categoria.id}
+
+    apiService.put("financas/gastos/" + gasto.id + "/", gastoJSON)
+      .then(response => {
+        if (response.status === 200){
+          return response.data
+        }
+        alert("Erro ao editar gasto")
+      })
+      .then(returnData => {
+        handleGastosAPIUpdate()
+      })
   }
+
 
   const deleteGasto = (id) =>{
     apiService.delete("financas/gastos/" + id)
@@ -70,7 +86,7 @@ const GastosList = ({gastosData}) => {
           alert("Erro ao deletar gastos")
       })
       .then(returnData => {
-          // Implementar Atualização de toda a página
+          handleGastosAPIUpdate()
       })
   }
 
@@ -98,7 +114,11 @@ const GastosList = ({gastosData}) => {
       headerClassName: 'hideLastcolumnSeparator',
       width: 20, 
       renderCell: (params) =>{
-        return (<IconButton onClick={event => editGasto(params.row.id)}> 
+        return (<IconButton onClick={() => {
+                    const row = {}
+                    Object.assign(row, params.row)
+                    setOpenUpdateGastoDialog(true);
+                    setSelectedGasto(row); }}> 
                   <EditIcon />
                 </IconButton>)
       },  
@@ -145,6 +165,15 @@ const GastosList = ({gastosData}) => {
           }
           handleCreateGasto={createGasto} 
           categorias={categorias}
+        />
+        <UpdateGastoDialog
+          open={openUpdateGastoDialog}
+          handleClose={()=>{
+            setOpenUpdateGastoDialog(false)
+          }}
+          handleUpdateGasto={updateGasto}
+          categorias={categorias}
+          selectedGasto={selectedGasto}
         />
       </div>
     )

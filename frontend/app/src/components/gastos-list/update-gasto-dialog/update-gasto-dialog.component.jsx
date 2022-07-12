@@ -10,18 +10,13 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Autocomplete, IconButton, InputAdornment } from "@mui/material";
 import { useEffect } from "react";
-import './create-gasto-dialog.scss'
+// import './update-gasto-dialog.scss'
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import CloseIcon from '@mui/icons-material/Close';
 
-const CreateGastoDialog = (props) => {
-
+const UpdateGastoDialog = (props) => {
     const [open, setOpen] = useState(props.open);
-    const [selectedCategoria, setSelectedCategoria] = useState(null);
-    const [selectedSubCategoria, setSelectedSubCategoria] = useState(null);
-    const [descricaoInput, setDescricaoInput] = useState("")
-    const [valorInput, setValorInput] = useState(0)
-    const [dateInput, setDateInput] = useState(new Date())
+    const [selectedGasto, setSelectedGasto] = useState({valor:0, descricao:"", data: new Date(), sub_categoria: {id:-1, label:""},  categoria: {id:-1, label:""}})
     const [categoriasOptions, setCategoriasOptions] = useState([]);
     const [subCategoriasOptions, setSubCategoriasOptions] = useState([])
 
@@ -32,49 +27,72 @@ const CreateGastoDialog = (props) => {
     },[])
 
     useEffect(() => {
+        let selectedGasto = props.selectedGasto
+        if (categoriasOptions.length > 0 && selectedGasto.descricao !== ""){
+            selectedGasto.categoria = categoriasOptions.filter((obj) => {
+                return obj.label === selectedGasto.categoria
+            })[0]
+
+            let categoria = props.categorias.filter((obj) => {
+                return obj.id === selectedGasto.categoria.id
+            })
+            let subCategorias = categoria[0].sub_categorias
+            
+            let aux = subCategorias.map((obj)=>{
+                return {id: obj.id, label: obj.nome}
+            })
+            setSubCategoriasOptions(aux)
+            selectedGasto.sub_categoria = aux.filter((obj) => {
+                return obj.label === selectedGasto.sub_categoria
+            })[0]
+
+            selectedGasto.data = new Date(selectedGasto.data)
+            
+        }
+        setSelectedGasto(selectedGasto)
+
+    },[props.selectedGasto])
+
+    useEffect(() => {
         setOpen(props.open)
-    },[props.open])
+    }, [props.open])
 
     const changeCategoria = (newValue) => {
         if (!newValue){
-            setSelectedCategoria(null);
-            setSelectedSubCategoria(null)
+            setSelectedGasto(prevState => ({
+                    ...prevState,
+                    categoria: null,
+                    sub_categoria: null, 
+                }));
             return
         }
         let categoria = props.categorias.filter((obj) => {
             return obj.id === newValue.id
-        })
-        let subCategorias = categoria[0].sub_categorias
+        })[0]
+        let subCategorias = categoria.sub_categorias
         setSubCategoriasOptions(subCategorias.map((obj)=>{
             return {id: obj.id, label: obj.nome}
         }))
-        setSelectedCategoria(newValue);
-        setSelectedSubCategoria(null)
+        setSelectedGasto(prevState => ({
+            ...prevState,
+            categoria: {id: categoria.id, label: categoria.nome},
+            sub_categoria: null,
+        }));
     }
 
-    const handleCreateGasto = () => {
+    const handleUpdateGasto = () => {
         setOpen(false);
-        const gasto = {
-            descricao:descricaoInput, 
-            valor:valorInput, 
-            sub_categoria:selectedSubCategoria.id,
-            data:dateInput.toISOString().split('T')[0]}
-        props.handleCreateGasto(gasto)
+        props.handleUpdateGasto(selectedGasto)
         handleClose()
     };
 
     const handleClose = () => {
-        setSelectedCategoria(null)
-        setSelectedSubCategoria(null)
-        setDescricaoInput("")
-        setDateInput(new Date())
-        setValorInput(0)
         setOpen(false)
         props.handleClose()
     }
 
     const validateForm = () => {
-        return (valorInput > 0) && (descricaoInput != "") && selectedSubCategoria
+        return (selectedGasto.valor > 0) && (selectedGasto.descricao != "") && selectedGasto.sub_categoria
     }
 
     if (categoriasOptions){
@@ -100,9 +118,12 @@ const CreateGastoDialog = (props) => {
                             <div className="col-4">
                                 <TextField
                                     autoFocus
-                                    value={descricaoInput}
+                                    value={selectedGasto.descricao}
                                     onChange={(event) => {
-                                        setDescricaoInput(event.target.value)
+                                        setSelectedGasto(prevState => ({
+                                            ...prevState,
+                                            descricao: event.target.value
+                                        }));
                                     }}
                                     margin="dense"
                                     id="descricao"
@@ -113,9 +134,12 @@ const CreateGastoDialog = (props) => {
                             <div className="col-4">
                                 <TextField
                                     autoFocus
-                                    value={valorInput}
+                                    value={selectedGasto.valor}
                                     onChange={(event) => {
-                                        setValorInput(event.target.value)
+                                        setSelectedGasto(prevState => ({
+                                            ...prevState,
+                                            valor: event.target.value
+                                        }));
                                     }}
                                     margin="dense"
                                     id="valor"
@@ -132,9 +156,12 @@ const CreateGastoDialog = (props) => {
                                 <DesktopDatePicker
                                     label="Data"
                                     inputFormat="MM/dd/yyyy"
-                                    value={dateInput}
+                                    value={selectedGasto.data}
                                     onChange={(event) => {
-                                        setDateInput(event)}
+                                        setSelectedGasto(prevState => ({
+                                            ...prevState,
+                                            data: event
+                                        }));}
                                     }
                                     renderInput={(params) => <TextField {...params} />}
                                     />
@@ -145,7 +172,7 @@ const CreateGastoDialog = (props) => {
                         <div className="row">
                             <div className="col-6">
                                 <Autocomplete
-                                    value={selectedCategoria}
+                                    value={selectedGasto.categoria}
                                     onChange={(event, newValue) => {
                                         changeCategoria(newValue)
                                     }}
@@ -160,9 +187,12 @@ const CreateGastoDialog = (props) => {
                             </div>
                             <div className="col-6">
                                 <Autocomplete
-                                    value={selectedSubCategoria}
+                                    value={selectedGasto.sub_categoria}
                                     onChange={(event, newValue) => {
-                                        setSelectedSubCategoria(newValue);
+                                        setSelectedGasto(prevState => ({
+                                            ...prevState,
+                                            sub_categoria: newValue,
+                                        }));
                                     }}
                                     id="subcategoria"
                                     options={subCategoriasOptions}
@@ -180,12 +210,11 @@ const CreateGastoDialog = (props) => {
     
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCreateGasto} disabled={!validateForm()}>Adicionar</Button>
+                    <Button onClick={handleUpdateGasto} disabled={!validateForm()}>Adicionar</Button>
                 </DialogActions>
             </Dialog>
         )
     }
-
 }
 
-export default CreateGastoDialog
+export default UpdateGastoDialog
