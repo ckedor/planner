@@ -5,6 +5,7 @@ import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-c
 import GastosBarChart from "../../../../components/gastos-bar-chart/gastos-bar-chart";
 import GastosList from "../../../../components/gastos-list/gastos-list";
 import './gastos.scss'
+import { Card, CardContent, Paper } from "@mui/material";
 
 
 const Gastos = () => {
@@ -37,16 +38,20 @@ const Gastos = () => {
                 <div className="col-lg-6 col-md-6 col-sm-12 gastos-charts-wrapper">
                     <div className="row">
                         <div className="col-12">
-                            <GastosPieChart chartData={gastosData?.gastos_por_categoria}></GastosPieChart>
+                            <Paper>
+                                <GastosPieChart chartData={gastosData?.gastos_por_categoria}></GastosPieChart>
+                            </Paper>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-12">
-                            <GastosBarChart chartData={gastosData?.gastos_por_subcategoria}></GastosBarChart>
+                        <div className="gastos-barchart-wrapper col-12">
+                            <Paper>
+                                <GastosBarChart chartData={gastosData?.gastos_por_subcategoria}></GastosBarChart>
+                            </Paper>
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-12 gastos-lists-wrapper">
+                <div className="col-lg-6 col-md-6 col-sm-12">
                     <GastosList gastosData={gastosData?.gastos} handleGastosAPIUpdate={getGastosPorCategoriaMonth}></GastosList>
                 </div>
             </div>

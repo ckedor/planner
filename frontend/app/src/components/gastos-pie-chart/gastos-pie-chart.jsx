@@ -1,4 +1,5 @@
 
+import { Card, CardContent, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import './gastos-pie-chart.scss'
@@ -55,7 +56,35 @@ const GastosPieChart = ({chartData}) => {
     return (
         <div>
             <div className="gastos-pie-chart">
-                <ReactApexChart options={options} series={series} type="donut" width={400}/>
+                <div className="row">
+                    <div className="col-4">
+                        <Card>
+                            <CardContent>
+                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                    Ganhos
+                                </Typography>
+                                <Typography component="div">
+                                    <b>R$ 8000,00</b>
+                                </Typography>
+                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                    Gastos
+                                </Typography>
+                                <Typography component="div" >
+                                    <b>R$ 7000,00</b>
+                                </Typography>
+                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                    Lucro
+                                </Typography>
+                                <Typography component="div">
+                                    <b>R$ 1000,00</b>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </div>
+                    <div className="col-8">
+                        <ReactApexChart options={options} series={series} type="donut" width={400}/>
+                    </div>
+                </div>
             </div>
         </div>
     )

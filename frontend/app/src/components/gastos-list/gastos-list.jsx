@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, Paper } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
@@ -32,7 +32,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
 
   useEffect(() => {
     getCategorias()
-  }, [])
+  }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getCategorias = () => {
     apiService.get("financas/categorias_gasto/")
@@ -139,7 +139,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
   if (gastos) {
 
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <Paper className="gastos-lista-data-grid-wrapper">
         <DataGrid
           rows={gastos}
           columns={columns}
@@ -175,7 +175,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
           categorias={categorias}
           selectedGasto={selectedGasto}
         />
-      </div>
+      </Paper>
     )
   }
   

@@ -11,10 +11,9 @@ const Financas = () => {
     return (
         <Fragment>
             <SideNav width={sideNavbarWidth} items={sideNavbarItems}/>
-            <div style={{ paddingTop: '70px', paddingLeft: sideNavbarWidth}}>
+            <div style={{ paddingTop: '60px', paddingLeft: sideNavbarWidth}}>
                 <Outlet />
             </div>
-            
         </Fragment>
     );
 };
