@@ -4,11 +4,11 @@
     "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
     "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
     "name": "financas/gastos/<pk>",
-    "url": "http://127.0.0.1:8000/financas/gastos/",
-    "method": "POST",
+    "url": "http://127.0.0.1:8000/financas/gastos/19/",
+    "method": "PUT",
     "sortNum": 10000,
     "created": "2022-06-08T20:56:22.350Z",
-    "modified": "2022-06-24T20:03:54.148Z",
+    "modified": "2022-07-12T00:29:39.753Z",
     "headers": [
       {
         "name": "Authorization",
@@ -22,7 +22,7 @@
       "form": [
         {
           "name": "id",
-          "value": "",
+          "value": "5",
           "isDisabled": true
         },
         {
@@ -31,7 +31,7 @@
         },
         {
           "name": "data",
-          "value": "2022-06-10"
+          "value": "10/06/2022"
         },
         {
           "name": "valor",
@@ -83,11 +83,11 @@
     "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
     "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
     "name": "/gastos",
-    "url": "http://127.0.0.1:8000/financas/gastos/por_categoria?month=06/2022",
+    "url": "http://127.0.0.1:8000/financas/gastos?month=07/2022",
     "method": "GET",
     "sortNum": 5000,
     "created": "2022-06-10T20:12:44.167Z",
-    "modified": "2022-06-25T15:27:05.000Z",
+    "modified": "2022-07-12T00:24:25.462Z",
     "headers": [
       {
         "name": "Authorization",
@@ -97,7 +97,7 @@
     "params": [
       {
         "name": "month",
-        "value": "06/2022",
+        "value": "07/2022",
         "isPath": false
       }
     ],
