@@ -9,6 +9,7 @@ import Login from './routes/login/login.component';
 import Financas from './routes/dashboard/financas/financas.component';
 import { AuthProvider}  from './context/auth.context';
 import Gastos from './routes/dashboard/financas/gastos/gastos.component';
+import EvolucaoPatrimonio from './routes/dashboard/financas/evolucao_patrimonio/evolucao_patrimonio.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,8 +21,9 @@ root.render(
           <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<div>DashboardInicialPage</div>} />
             <Route path="/dashboard/financas" element={<Financas />}>
-              <Route index element={<Gastos />} />
-              <Route path='/dashboard/financas/patrimonio' element={<div>patrimonio</div>} />
+              <Route index  element={<Gastos />}/>
+              <Route path='/dashboard/financas/evolucao_patrimonio' element={<EvolucaoPatrimonio />} />
+              
             </Route>
           </Route>
           <Route path="/" element={<Navigate to="/dashboard" replace />}></Route>

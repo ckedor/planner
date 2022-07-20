@@ -9,7 +9,7 @@ const Financas = () => {
 
     const sideNavbarWidth = 200
     const sideNavbarItems = [{name: 'Gastos', link: '/dashboard/financas', icon: <AttachMoneyIcon />},
-                             {name: 'Evolução Patrimônio', link: '/', icon: <TimelineIcon />},
+                             {name: 'Evolução Patrimônio', link: '/dashboard/financas/evolucao_patrimonio', icon: <TimelineIcon />},
                              {name: 'Carteira', link: '/', icon: <SavingsIcon />},
                             ]
 
