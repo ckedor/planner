@@ -23,8 +23,8 @@ const SideNav = ({width, items}) =>{
       <Box sx={{ overflow: 'auto', marginTop: '48px'}}>
         <List>
           {items.map((item, index) => (
-            <ListItem key={item.name} selected={item.link===currentPath} disablePadding button component={Link} to={item.link}>
-                <ListItemIcon>
+            <ListItem className="sidenav-list-item" key={item.name} selected={item.link===currentPath} disablePadding button component={Link} to={item.link}>
+                <ListItemIcon className="sidenav-list-icon">
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.name} />
