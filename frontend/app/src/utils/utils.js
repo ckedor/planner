@@ -1,3 +1,4 @@
+// Date/Time
 export const dateToString = (date, format) => {
     if (format === "MM/YYYY"){
         return date.toLocaleDateString().slice(3)
@@ -9,6 +10,12 @@ export const dateToString = (date, format) => {
     return date.toLocaleDateString()
 }
 
+// Arrays
+export const sumObjectArrayProperty = (array, property) => {
+    return array?.reduce((acc, obj) => {
+        return acc + obj[property];
+    }, 0)
+}
 
 export const sort = (property) => {
     var sortOrder = 1;
@@ -32,4 +39,19 @@ export const sortMultiple = (arg1, arg2) => {
         }
         return result;
     }
+}
+
+// Number/Strings/Currency
+export const numberToLocaleCurrencyString = (value) => {
+    if (value < 0){
+        return "- R$ " + numberToLocaleString(-value, 2)
+    }
+    return "R$ " + numberToLocaleString(value, 2)
+}
+
+export const numberToLocaleString = (value, digits) => {
+    return (value?.toLocaleString(undefined, 
+            {minimumFractionDigits: digits, 
+            maximumFractionDigits: digits})
+    )
 }

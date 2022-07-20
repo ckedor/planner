@@ -2,16 +2,20 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { numberToLocaleCurrencyString, sumObjectArrayProperty } from '../../utils/utils';
 import './gastos-pie-chart.scss'
 
 const GastosPieChart = ({chartData}) => {
     
     const [options, setOptions] = useState({})
     const [series, setSeries] = useState([])
+    const [somaGastos, setSomaGastos] = useState(0)
+    const [somaReceitas, setSomaReceitas] = useState(0)
 
     useEffect( () =>{
         mountChart();
-    }, [chartData]);
+        setSomaGastos(sumObjectArrayProperty(chartData, "gastoTotal"))
+    }, [chartData]); // eslint-disable-line
 
     const mountChart = () => {
         if (!chartData){
@@ -64,25 +68,25 @@ const GastosPieChart = ({chartData}) => {
                                     Ganhos
                                 </Typography>
                                 <Typography component="div">
-                                    <b>R$ 8000,00</b>
+                                    <b>{numberToLocaleCurrencyString(somaReceitas)}</b>
                                 </Typography>
                                 <Typography variant="subtitle1" color="text.secondary" component="div">
                                     Gastos
                                 </Typography>
                                 <Typography component="div" >
-                                    <b>R$ 7000,00</b>
+                                    <b>{numberToLocaleCurrencyString(somaGastos)}</b>
                                 </Typography>
                                 <Typography variant="subtitle1" color="text.secondary" component="div">
                                     Lucro
                                 </Typography>
                                 <Typography component="div">
-                                    <b>R$ 1000,00</b>
+                                    <b>{numberToLocaleCurrencyString(somaReceitas - somaGastos)}</b>
                                 </Typography>
                             </CardContent>
                         </Card>
                     </div>
                     <div className="col-8">
-                        <ReactApexChart options={options} series={series} type="donut" width={400}/>
+                        <ReactApexChart options={options} series={series} type="donut"/>
                     </div>
                 </div>
             </div>
