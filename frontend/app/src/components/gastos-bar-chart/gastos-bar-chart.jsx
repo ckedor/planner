@@ -1,4 +1,5 @@
 
+import { Skeleton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import './gastos-bar-chart.scss'
@@ -7,11 +8,10 @@ const GastosBarChart = ({ chartData }) => {
 
     const [options, setOptions] = useState({})
     const [series, setSeries] = useState([])
-    const [chartColors, setChartColors] = useState(null)
 
     useEffect( () =>{
         mountChart();
-    }, [chartData, chartColors]);
+    }, [chartData]); //eslint-disable-line
 
     const colors = [
         ['#DA7E7E', '#DA6767', '#DA4B4B', '#D93535', '#D91F1F', '#D90C0C', '#B90505', '#870404', '#5A0202'],
@@ -31,7 +31,7 @@ const GastosBarChart = ({ chartData }) => {
         }
 
         const categories = [...new Set(chartData.map(obj => obj.categoria))]
-        setSeries(mountSeriesFromChartData(categories))
+        const chartColors = mountSeriesFromChartData(categories)
         setOptions({
             chart: {
                 type: 'bar', 
@@ -104,12 +104,11 @@ const GastosBarChart = ({ chartData }) => {
 
     const mountSeriesFromChartData = (categories) =>{
         let series = []
-
         const chartColors = []
         
         categories.forEach( (item, index) => {
             let itensCategoria = chartData.filter((obj) =>{
-                return obj.categoria == item
+                return obj.categoria === item
             })
             for (let i=0; i<itensCategoria.length; i++){
                 let dataArray = new Array(categories.length).fill(0)
@@ -121,14 +120,17 @@ const GastosBarChart = ({ chartData }) => {
                 chartColors.push(colors[index][i])
             }
         })
-        setChartColors(chartColors)
-        return series
+        setSeries(series)
+        return chartColors
     }
     
-
     return (
         <div>
-            <ReactApexChart options={options} series={series} type="bar" width={'100%'}/>
+            { (options && series.length>0) ? (
+                <ReactApexChart options={options} series={series} type="bar" width={'100%'}/>
+            ) : (
+                <Skeleton variant="rect" width={'100%'} height={200} />
+            )}
         </div>
     )
 }

@@ -144,6 +144,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
           rows={gastos}
           columns={columns}
           pageSize={20}
+          rowsPerPageOptions={[20]}
           components={
             { Toolbar: GridToolbar }
           }
