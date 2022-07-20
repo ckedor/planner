@@ -1,7 +1,7 @@
 import datetime
 from rest_framework import viewsets
-from financas.models import CategoriaGasto, Gasto, SubCategoriaGasto
-from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, SubCategoriaGastoSerializer
+from financas.models import CategoriaGasto, Gasto, Receita, SubCategoriaGasto
+from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, ReceitaCreateSerializer, ReceitaGetSerializer, SubCategoriaGastoSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -64,6 +64,28 @@ class GastoViewSet(viewsets.ModelViewSet):
                     "gastos_por_categoria":gastos_por_categoria}
         
         return Response(response)
+    
+class ReceitaViewSet(viewsets.ModelViewSet):
+    queryset = Receita.objects.all()
+    
+    def get_queryset(self):
+        user_id = self.request.user.id
+        month = self.request.query_params.get('month', None)
+        
+        queryset = Receita.objects.filter(user_id=user_id)
+        if month:
+            month = datetime.datetime.strptime(month, "%m/%Y")
+            queryset = queryset.filter(data__year = month.year, 
+                                       data__month = month.month)
+        
+        return queryset
+    
+    def get_serializer_class(self):
+        if self.action == 'create' or self.action == 'update':
+            return ReceitaCreateSerializer
+        return ReceitaGetSerializer
+    
+    
         
         
         

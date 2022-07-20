@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CategoriaGasto, SubCategoriaGasto, Gasto
+from .models import CategoriaGasto, Receita, SubCategoriaGasto, Gasto
     
     
 class SubCategoriaGastoSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,3 +42,20 @@ class GastoCreateSerializer(serializers.ModelSerializer):
         validated_data["user"] = self.context["request"].user
         gasto = Gasto.objects.create(**validated_data)
         return gasto
+    
+class ReceitaGetSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Receita
+        fields = ['id', 'fonte', 'valor', 'data']
+        
+class ReceitaCreateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Receita
+        fields = ['id', 'fonte', 'valor', 'data']
+        
+    def create(self, validated_data):
+        validated_data["user"] = self.context["request"].user
+        receita = Receita.objects.create(**validated_data)
+        return receita
