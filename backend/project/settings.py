@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from decouple import config
 import django_heroku
@@ -116,6 +117,7 @@ REST_FRAMEWORK = {
 }
 
 if DEBUG:
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = ['rest_framework.authentication.BasicAuthentication', 'rest_framework_simplejwt.authentication.JWTAuthentication']
     REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = []
     SIMPLE_JWT["BLACKLIST_AFTER_ROTATION"] = False
 

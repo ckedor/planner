@@ -4,11 +4,11 @@
     "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
     "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
     "name": "financas/gastos/<pk>",
-    "url": "http://127.0.0.1:8000/financas/gastos/19/",
-    "method": "PUT",
+    "url": "http://127.0.0.1:8000/financas/gastos/",
+    "method": "POST",
     "sortNum": 10000,
     "created": "2022-06-08T20:56:22.350Z",
-    "modified": "2022-07-12T00:29:39.753Z",
+    "modified": "2022-06-24T20:03:54.148Z",
     "headers": [
       {
         "name": "Authorization",
@@ -22,7 +22,7 @@
       "form": [
         {
           "name": "id",
-          "value": "5",
+          "value": "",
           "isDisabled": true
         },
         {
@@ -31,7 +31,7 @@
         },
         {
           "name": "data",
-          "value": "10/06/2022"
+          "value": "2022-06-10"
         },
         {
           "name": "valor",
@@ -83,11 +83,11 @@
     "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
     "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
     "name": "/gastos",
-    "url": "http://127.0.0.1:8000/financas/gastos?month=07/2022",
+    "url": "http://127.0.0.1:8000/financas/gastos/por_categoria?month=06/2022",
     "method": "GET",
     "sortNum": 5000,
     "created": "2022-06-10T20:12:44.167Z",
-    "modified": "2022-07-12T00:24:25.462Z",
+    "modified": "2022-06-25T15:27:05.000Z",
     "headers": [
       {
         "name": "Authorization",
@@ -97,7 +97,7 @@
     "params": [
       {
         "name": "month",
-        "value": "07/2022",
+        "value": "06/2022",
         "isPath": false
       }
     ],
@@ -147,6 +147,77 @@
       }
     ],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ae4c0d57-d443-49f8-a9da-57d39a9e4b1e",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+    "name": "/receitas",
+    "url": "http://127.0.0.1:8000/financas/receitas/",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2022-07-20T15:53:17.988Z",
+    "modified": "2022-07-20T15:59:03.659Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "fonte",
+          "value": "receita"
+        },
+        {
+          "name": "valor",
+          "value": "123"
+        },
+        {
+          "name": "data",
+          "value": "2022-11-02"
+        }
+      ]
+    },
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "admin",
+        "password": "senhafacil"
+      }
+    },
+    "tests": []
+  },
+  {
+    "_id": "1bd99aa2-04eb-4781-80c4-c9d27c215bb8",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+    "name": "/receitas",
+    "url": "http://127.0.0.1:8000/financas/receitas?month=11/2022",
+    "method": "GET",
+    "sortNum": 15000,
+    "created": "2022-07-20T15:59:36.078Z",
+    "modified": "2022-07-20T16:00:20.663Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de"
+      }
+    ],
+    "params": [
+      {
+        "name": "month",
+        "value": "11/2022",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "admin",
+        "password": "senhafacil"
+      }
+    },
     "tests": []
   }
 ]
