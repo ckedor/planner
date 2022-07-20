@@ -61,7 +61,6 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
   }
 
   const updateGasto = (gasto) => {
-    console.log(gasto)
     let gastoJSON = {descricao: gasto.descricao, data: gasto.data.toISOString().split('T')[0], valor: gasto.valor, sub_categoria:gasto.sub_categoria.id}
 
     apiService.put("financas/gastos/" + gasto.id + "/", gastoJSON)
