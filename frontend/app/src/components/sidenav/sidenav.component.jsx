@@ -7,7 +7,7 @@ import './sidenav.scss'
 const SideNav = ({width, items}) =>{
 
     const [currentPath, setCurrentPath] = useState(window.location.pathname)
-    
+
     useEffect( () =>{
       let currentPath = window.location.pathname
       if (currentPath.slice(-1) === '/'){
@@ -39,7 +39,7 @@ const SideNav = ({width, items}) =>{
               to={item.link} 
               onClick={(event) => setCurrentPath(item.link)
               }>
-                <ListItemIcon>
+                <ListItemIcon className="sidenav-list-icon">
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.name} />
