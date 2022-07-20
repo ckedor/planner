@@ -7,8 +7,7 @@ import './sidenav.scss'
 const SideNav = ({width, items}) =>{
 
     const [currentPath, setCurrentPath] = useState(window.location.pathname)
-
-
+    
     useEffect( () =>{
       let currentPath = window.location.pathname
       if (currentPath.slice(-1) === '/'){
@@ -30,7 +29,16 @@ const SideNav = ({width, items}) =>{
       <Box sx={{ overflow: 'auto', marginTop: '48px'}}>
         <List>
           {items.map((item, index) => (
-            <ListItem className="sidenav-list-item" key={item.name} selected={item.link===currentPath} disablePadding button component={Link} to={item.link} onClick={(event) => setCurrentPath(item.link)}>
+            <ListItem 
+              className="sidenav-list-item" 
+              key={item.name} 
+              selected={item.link===currentPath} 
+              disablePadding 
+              button 
+              component={Link} 
+              to={item.link} 
+              onClick={(event) => setCurrentPath(item.link)
+              }>
                 <ListItemIcon>
                   {item.icon}
                 </ListItemIcon>
