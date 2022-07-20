@@ -5,21 +5,24 @@ import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-c
 import GastosBarChart from "../../../../components/gastos-bar-chart/gastos-bar-chart";
 import GastosList from "../../../../components/gastos-list/gastos-list";
 import './gastos.scss'
-import { Card, CardContent, Paper } from "@mui/material";
+import { DatePicker, MonthPicker } from '@mui/x-date-pickers';
+import { Paper, TextField } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 
 const Gastos = () => {
 
     const apiService = new APIService()
     const [gastosData, setGastosData] = useState(null)
-    const [selectedMonth, setSelectedMonth ] = useState(dateToString(new Date(), "MM/YYYY"))
+    const [selectedMonth, setSelectedMonth ] = useState(new Date())
 
     useEffect(() => {
         getGastosPorCategoriaMonth()
-    }, []) // eslint-disable-line
+    }, [selectedMonth]) // eslint-disable-line
 
     const getGastosPorCategoriaMonth = () => {
-        apiService.get("financas/gastos/por_categoria", { month: selectedMonth })
+        apiService.get("financas/gastos/por_categoria", { month: dateToString(selectedMonth, "MM/YYYY") })
             .then(response => {
                 if (response.status === 200) {
                     return response.data
@@ -34,6 +37,21 @@ const Gastos = () => {
 
     return (
         <div className="container-xl">
+            <div className="row gastos-month-select">
+                <div className="col-2">
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            views={['year', 'month']}
+                            label="Mês Selecionado"
+                            minDate={new Date('2012-03-01')}
+                            inputFormat="MM/yyyy"
+                            value={selectedMonth}
+                            onChange={(event) => {setSelectedMonth(event)}}
+                            renderInput={(params) => <TextField {...params} helperText={null} />}
+                        />
+                    </LocalizationProvider>
+                </div>
+            </div>
             <div className="row gastos-container">
                 <div className="col-lg-6 col-md-6 col-sm-12 gastos-charts-wrapper">
                     <div className="row">

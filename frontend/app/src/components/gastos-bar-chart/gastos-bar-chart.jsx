@@ -7,10 +7,23 @@ const GastosBarChart = ({ chartData }) => {
 
     const [options, setOptions] = useState({})
     const [series, setSeries] = useState([])
+    const [chartColors, setChartColors] = useState(null)
 
     useEffect( () =>{
         mountChart();
-    }, [chartData]);
+    }, [chartData, chartColors]);
+
+    const colors = [
+        ['#DA7E7E', '#DA6767', '#DA4B4B', '#D93535', '#D91F1F', '#D90C0C', '#B90505', '#870404', '#5A0202'],
+        ['#DAB37E', '#D9AC70', '#D09C57', '#C78C3D', '#C18028', '#B47014', '#A36108', '#8C5102', '#6A3D01'],
+        ['#DADA7E', '#D5D56B', '#DADA7E', '#CCCC4F', '#C8C836', '#BBBB1E', '#AEAE0C', '#9C9C03', '#787801'],
+        ['#A6DA7E', '#98D866', '#88D14E', '#78C938', '#6FC62A', '#65BF1E', '#5BB910', '#50AD06', '#449A00'],
+        ['#7EDA9B', '#69D38A', '#56CD7B', '#3AC565', '#31A856', '#269749', '#1B813B', '#10702E', '#095722'],
+        ['#7EDAC2', '#6DD5BA', '#58D1B1', '#44CEAA', '#37CEA7', '#29CAA1', '#1AC599', '#0EB98D', '#07A97F'],
+        ['#7EADDA', '#6EA4D7', '#5590C8', '#3876B1', '#23619C', '#16538C', '#0A4073', '#04335F', '#012546'],
+        ['#AD7EDA', '#9A64CF', '#8E52CA', '#8040C1', '#7633BB', '#671FB1', '#5B15A4', '#510A9B', '#47048C'],
+        ['#DA7EC9', '#D468C0', '#CC4BB4', '#BD2CA2', '#A01586', '#880970', '#73025D', '#49033C', '#22001C'],
+    ]
 
     const mountChart = () => {
         if (!chartData){
@@ -33,6 +46,7 @@ const GastosBarChart = ({ chartData }) => {
                     }
                 },
             },
+            colors: chartColors,
             stroke: {
                 width: 1, 
                 colors: ['#fff']
@@ -90,21 +104,24 @@ const GastosBarChart = ({ chartData }) => {
 
     const mountSeriesFromChartData = (categories) =>{
         let series = []
+
+        const chartColors = []
         
         categories.forEach( (item, index) => {
             let itensCategoria = chartData.filter((obj) =>{
                 return obj.categoria == item
             })
             for (let i=0; i<itensCategoria.length; i++){
-
                 let dataArray = new Array(categories.length).fill(0)
                 dataArray[index] = itensCategoria[i].gastoTotal
                 series.push({
                     name: itensCategoria[i].subcategoria,
                     data: dataArray
                 })
+                chartColors.push(colors[index][i])
             }
         })
+        setChartColors(chartColors)
         return series
     }
     
