@@ -126,11 +126,7 @@ const GastosBarChart = ({ chartData }) => {
     
     return (
         <div>
-            { (options && series.length>0) ? (
-                <ReactApexChart options={options} series={series} type="bar" width={'100%'}/>
-            ) : (
-                <Skeleton variant="rect" width={'100%'} height={200} />
-            )}
+            <ReactApexChart options={options} series={series} type="bar" width={'100%'}/>
         </div>
     )
 }

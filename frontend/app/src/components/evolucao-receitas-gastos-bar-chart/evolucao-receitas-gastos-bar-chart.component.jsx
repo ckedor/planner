@@ -6,12 +6,12 @@ const EvolucaoReceitasGastosBarChart = ({ chartData }) => {
 
     const [options, setOptions] = useState({})
     const [series, setSeries] = useState([{
-              name: 'Receitas',
-              data: [7300, 7300, 7300, 7300, 7300, 7300, 7300, 7300, 7300]
+                name: 'Receitas',
+                data: [7300, 7300, 7300, 7300, 7300, 7300, 7300, 7300, 7300]
             }, {
-              name: 'Gastos',
-              data: [6000, 6000, 6000, 5000, 6666, 7777, 4700, 6000, 6000]
-            }
+                name: 'Gastos',
+                data: [6000, 6000, 6000, 5000, 6666, 7777, 4700, 6000, 6000]
+            }, 
         ])
 
     useEffect( () =>{
@@ -19,9 +19,9 @@ const EvolucaoReceitasGastosBarChart = ({ chartData }) => {
     }, [chartData]); //eslint-disable-line
 
     const mountChart = () => {
-        // if (!chartData){
-        //     return
-        // }
+        if (!chartData){
+            return
+        }
         const categories = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set']
 
         setOptions({

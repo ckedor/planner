@@ -5,7 +5,7 @@ import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-c
 import GastosBarChart from "../../../../components/gastos-bar-chart/gastos-bar-chart";
 import GastosList from "../../../../components/gastos-list/gastos-list";
 import './gastos.scss'
-import { DatePicker, MonthPicker } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers';
 import { Paper, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -16,9 +16,11 @@ const Gastos = () => {
     const apiService = new APIService()
     const [gastosData, setGastosData] = useState(null)
     const [selectedMonth, setSelectedMonth ] = useState(new Date())
+    const [receitasData, setReceitasData] = useState(null)
 
     useEffect(() => {
         getGastosPorCategoriaMonth()
+        getReceitasData()
     }, [selectedMonth]) // eslint-disable-line
 
     const getGastosPorCategoriaMonth = () => {
@@ -31,9 +33,23 @@ const Gastos = () => {
             })
             .then(returnData => {
                 setGastosData(returnData)
-            })
+            }
+        )
     }
 
+    const getReceitasData = () => {
+        apiService.get("financas/receitas", { month: dateToString(selectedMonth, "MM/YYYY") })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.data
+                }
+                alert("Erro ao pegar receitas")
+            })
+            .then(returnData => {
+                setReceitasData(returnData)
+            }
+        )
+    }
 
     return (
         <div className="container-xl">
