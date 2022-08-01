@@ -13,6 +13,8 @@ export const dateToString = (date, format) => {
 // Arrays
 export const sumObjectArrayProperty = (array, property) => {
     return array?.reduce((acc, obj) => {
+        console.log(acc, obj)
+        console.log(typeof(obj[property]))
         return acc + obj[property];
     }, 0)
 }

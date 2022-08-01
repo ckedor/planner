@@ -1,7 +1,7 @@
-import { Button, IconButton, Paper } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './gastos-list.scss'
 import APIService from '../../http';
@@ -17,6 +17,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
   const [openCreateGastoDialog, setOpenCreateGastoDialog] = useState(false)
   const [openUpdateGastoDialog, setOpenUpdateGastoDialog] = useState(false)
   const [selectedGasto, setSelectedGasto] = useState({valor:0, descricao:"", data: new Date(), sub_categoria: {id:-1, label:""},  categoria: {id:-1, label:""}})
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setGastos(gastosData?.map((obj) => {
@@ -31,6 +32,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
   }, [gastosData])
 
   useEffect(() => {
+    setLoading(true)
     getCategorias()
   }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -44,6 +46,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
       })
       .then(returnData => {
           setCategorias(returnData.results)
+          setLoading(false)
       })
   }
 
@@ -138,44 +141,64 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
   if (gastos) {
 
     return (
-      <Paper className="gastos-lista-data-grid-wrapper">
-        <DataGrid
-          rows={gastos}
-          columns={columns}
-          pageSize={20}
-          rowsPerPageOptions={[20]}
-          components={
-            { Toolbar: GridToolbar }
-          }
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
-          disableDensitySelector
-          disableColumnFilter
-          disableColumnSelector
-        />
-        <Button onClick={event => setOpenCreateGastoDialog(true)}>Adicionar Gasto</Button>
-        <CreateGastoDialog 
-          open={openCreateGastoDialog} 
-          handleClose={()=>{
-            setOpenCreateGastoDialog(false)}
-          }
-          handleCreateGasto={createGasto} 
-          categorias={categorias}
-        />
-        <UpdateGastoDialog
-          open={openUpdateGastoDialog}
-          handleClose={()=>{
-            setOpenUpdateGastoDialog(false)
-          }}
-          handleUpdateGasto={updateGasto}
-          categorias={categorias}
-          selectedGasto={selectedGasto}
-        />
-      </Paper>
+      <Fragment>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              rows={gastos}
+              columns={columns}
+              pageSize={20}
+              rowsPerPageOptions={[20]}
+              components={
+                { Toolbar: GridToolbar }
+              }
+              componentsProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
+              disableDensitySelector
+              disableColumnFilter
+              disableColumnSelector
+            />
+            <Button 
+              variant="contained"
+              elevation={2}
+              sx={{ color: '#0075BD', backgroundColor: 'white', paddingTop: '10px', boxShadow: 0, "&:hover": {backgroundColor:'white',  boxShadow: 0, color: '#005990', fontWeight: 'bold'}}}
+              style={{ position: 'relative', left: '10px', top: '-43px' }} 
+              onClick={event => setOpenCreateGastoDialog(true)}>
+                Adicionar Gasto
+            </Button>
+          </div>
+        </div>
+        <div>
+          { loading ? (
+            <div></div>
+          ) : (
+            <div>
+              <CreateGastoDialog 
+                open={openCreateGastoDialog} 
+                handleClose={()=>{
+                  setOpenCreateGastoDialog(false)}
+                }
+                handleCreateGasto={createGasto} 
+                categorias={categorias}
+              />
+              <UpdateGastoDialog
+                open={openUpdateGastoDialog}
+                handleClose={()=>{
+                  setOpenUpdateGastoDialog(false)
+                }}
+                handleUpdateGasto={updateGasto}
+                categorias={categorias}
+                selectedGasto={selectedGasto}
+              />
+            </div>
+          )}
+        </div>
+        
+      </Fragment>
     )
   }
   

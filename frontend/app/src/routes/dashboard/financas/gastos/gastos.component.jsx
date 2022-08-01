@@ -4,11 +4,12 @@ import { dateToString } from "../../../../utils/utils";
 import GastosPieChart from "../../../../components/gastos-pie-chart/gastos-pie-chart";
 import GastosBarChart from "../../../../components/gastos-bar-chart/gastos-bar-chart";
 import GastosList from "../../../../components/gastos-list/gastos-list";
-import './gastos.scss'
 import { DatePicker } from '@mui/x-date-pickers';
-import { Paper, TextField } from "@mui/material";
+import { Button, Paper, Skeleton, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import CreateReceitaDialog from "../../../../components/create-receita-dialog/create-receita-dialog.component";
+import './gastos.scss'
 
 
 const Gastos = () => {
@@ -16,9 +17,14 @@ const Gastos = () => {
     const apiService = new APIService()
     const [gastosData, setGastosData] = useState(null)
     const [selectedMonth, setSelectedMonth ] = useState(new Date())
+    const [openCreateReceitaDialog, setOpenCreateReceitaDialog] = useState(false)
     const [receitasData, setReceitasData] = useState(null)
+    const [gastosIsLoading, setGastosIsLoading] = useState(true)
+    const [receitasIsLoading, setReceitasIsLoading] = useState(true)
 
     useEffect(() => {
+        setReceitasIsLoading(true)
+        setGastosIsLoading(true)
         getGastosPorCategoriaMonth()
         getReceitasData()
     }, [selectedMonth]) // eslint-disable-line
@@ -33,6 +39,7 @@ const Gastos = () => {
             })
             .then(returnData => {
                 setGastosData(returnData)
+                setGastosIsLoading(false)
             }
         )
     }
@@ -46,9 +53,23 @@ const Gastos = () => {
                 alert("Erro ao pegar receitas")
             })
             .then(returnData => {
-                setReceitasData(returnData)
+                setReceitasData(returnData.results)
+                setReceitasIsLoading(false)
             }
         )
+    }
+
+    const createReceita = (receita) =>{
+    apiService.post("financas/receitas/", receita)
+        .then(response => {
+            if (response.status === 201) {
+                return response.data
+            }
+            alert("Erro ao criar receita")
+        })
+        .then(returnData => {
+            getReceitasData()
+        })
     }
 
     return (
@@ -67,28 +88,62 @@ const Gastos = () => {
                         />
                     </LocalizationProvider>
                 </div>
+                <div className="col-8"></div>
+                <div className="col-2 adicionar-receita-button">
+                    <Button
+                        variant="contained"
+                        elevation={2}
+                        sx={{ color: '#0075BD', backgroundColor: 'white', paddingTop: '10px', boxShadow: 1, "&:hover": {backgroundColor:'white', fontWeight: 'bold'}}}
+                        onClick={event => setOpenCreateReceitaDialog(true)}>Adicionar Receita
+                    </Button>
+                </div>
             </div>
             <div className="row gastos-container">
                 <div className="col-lg-6 col-md-6 col-sm-12 gastos-charts-wrapper">
                     <div className="row">
                         <div className="col-12">
-                            <Paper>
-                                <GastosPieChart chartData={gastosData?.gastos_por_categoria}></GastosPieChart>
-                            </Paper>
+                            {gastosIsLoading ? (
+                                <Skeleton variant="rect" height={330}></Skeleton>
+                            ): (
+                                <Paper>
+                                    <GastosPieChart 
+                                        chartData={ gastosData?.gastos_por_categoria } 
+                                        receitas={ receitasData }>
+                                    </GastosPieChart>
+                                </Paper>
+                            )}
                         </div>
                     </div>
                     <div className="row">
                         <div className="gastos-barchart-wrapper col-12">
-                            <Paper>
-                                <GastosBarChart chartData={gastosData?.gastos_por_subcategoria}></GastosBarChart>
-                            </Paper>
+                            {gastosIsLoading ? (
+                                <Skeleton variant="rect" height={400}></Skeleton>
+                            ): (
+                                <Paper>
+                                    <GastosBarChart chartData={gastosData?.gastos_por_subcategoria}></GastosBarChart>
+                                </Paper>
+                            )}
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12">
-                    <GastosList gastosData={gastosData?.gastos} handleGastosAPIUpdate={getGastosPorCategoriaMonth}></GastosList>
+                    {gastosIsLoading ? (
+                        <Skeleton variant="rect" height={760}></Skeleton>
+                    ): (
+                        <Paper className="gastos-list-wrapper">
+                            <GastosList gastosData={gastosData?.gastos} handleGastosAPIUpdate={getGastosPorCategoriaMonth}></GastosList>
+                        </Paper>
+                    )}
+                   
                 </div>
             </div>
+            <CreateReceitaDialog
+                open={openCreateReceitaDialog} 
+                handleClose={()=>{
+                    setOpenCreateReceitaDialog(false)}
+                }
+                handleCreateReceita={createReceita} 
+            />
         </div>
     );
 };

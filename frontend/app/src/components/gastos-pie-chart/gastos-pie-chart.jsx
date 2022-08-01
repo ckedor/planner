@@ -1,11 +1,10 @@
-
 import { Card, CardContent, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { numberToLocaleCurrencyString, sumObjectArrayProperty } from '../../utils/utils';
 import './gastos-pie-chart.scss'
 
-const GastosPieChart = ({chartData}) => {
+const GastosPieChart = ({chartData, receitas }) => {
     
     const [options, setOptions] = useState({})
     const [series, setSeries] = useState([])
@@ -15,6 +14,7 @@ const GastosPieChart = ({chartData}) => {
     useEffect( () =>{
         mountChart();
         setSomaGastos(sumObjectArrayProperty(chartData, "gastoTotal"))
+        setSomaReceitas(sumObjectArrayProperty(receitas, "valor"))
     }, [chartData]); // eslint-disable-line
 
     const mountChart = () => {
@@ -65,7 +65,7 @@ const GastosPieChart = ({chartData}) => {
                         <Card>
                             <CardContent>
                                 <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Ganhos
+                                    Receitas
                                 </Typography>
                                 <Typography component="div">
                                     <b>{numberToLocaleCurrencyString(somaReceitas)}</b>
