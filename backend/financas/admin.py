@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Gasto, SubCategoriaGasto, CategoriaGasto
+from .models import Gasto, Receita, SubCategoriaGasto, CategoriaGasto
 
 class CategoryChoiceField(forms.ModelChoiceField):
      def label_from_instance(self, obj):
@@ -36,3 +36,4 @@ class SubCategoriaAdmin(admin.ModelAdmin):
 admin.site.register(Gasto, GastoAdmin)
 admin.site.register(CategoriaGasto, CategoriaGastoAdmin)
 admin.site.register(SubCategoriaGasto, SubCategoriaAdmin) 
+admin.site.register(Receita)
