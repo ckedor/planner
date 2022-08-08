@@ -61,30 +61,32 @@ const GastosPieChart = ({chartData, receitas }) => {
         <div>
             <div className="gastos-pie-chart">
                 <div className="row">
-                    <div className="col-4">
-                        <Card>
-                            <CardContent>
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Receitas
-                                </Typography>
-                                <Typography component="div">
-                                    <b>{numberToLocaleCurrencyString(somaReceitas)}</b>
-                                </Typography>
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Gastos
-                                </Typography>
-                                <Typography component="div" >
-                                    <b>{numberToLocaleCurrencyString(somaGastos)}</b>
-                                </Typography>
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Lucro
-                                </Typography>
-                                <Typography component="div">
-                                    <b>{numberToLocaleCurrencyString(somaReceitas - somaGastos)}</b>
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </div>
+                    {!somaGastos ? <div className="col-4"></div> :
+                        <div className="col-4">
+                            <Card>
+                                <CardContent>
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                        Receitas
+                                    </Typography>
+                                    <Typography component="div">
+                                        <b>{numberToLocaleCurrencyString(somaReceitas)}</b>
+                                    </Typography>
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                        Gastos
+                                    </Typography>
+                                    <Typography component="div" >
+                                        <b>{numberToLocaleCurrencyString(somaGastos)}</b>
+                                    </Typography>
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                        Lucro
+                                    </Typography>
+                                    <Typography component="div">
+                                        <b>{numberToLocaleCurrencyString(somaReceitas - somaGastos)}</b>
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    }
                     <div className="col-8">
                         <ReactApexChart options={options} series={series} type="donut"/>
                     </div>
