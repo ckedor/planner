@@ -142,7 +142,11 @@ const Gastos = () => {
                 handleClose={()=>{
                     setOpenCreateReceitaDialog(false)}
                 }
-                handleCreateReceita={createReceita} 
+                handleCreateReceita={ (receita) => {
+                    getGastosPorCategoriaMonth()
+                    createReceita(receita)
+                    }
+                } 
             />
         </div>
     );

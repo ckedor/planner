@@ -6,8 +6,17 @@ export const dateToString = (date, format) => {
         const offset = date.getTimezoneOffset()
         date = new Date(date.getTime() - (offset*60*1000))
         return date.toISOString().split('T')[0]
+    } else if (format === "DD/MM/YYYY"){
+        date = new Date(date)
+        return date.toLocaleString().slice(0, 10)
     }
     return date.toLocaleDateString()
+}
+
+export const stringToDate = (strDate, format) => {
+    if (format === "YYYY-MM-DD"){
+        return new Date(strDate.replace(/-/g, '\/'))
+    }
 }
 
 // Arrays

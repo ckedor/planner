@@ -13,6 +13,7 @@ import { useEffect } from "react";
 // import './update-gasto-dialog.scss'
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import CloseIcon from '@mui/icons-material/Close';
+import { stringToDate } from "../../../utils/utils";
 
 const UpdateGastoDialog = (props) => {
     const [open, setOpen] = useState(props.open);
@@ -28,6 +29,7 @@ const UpdateGastoDialog = (props) => {
 
     useEffect(() => {
         let selectedGasto = props.selectedGasto
+
         if (categoriasOptions.length > 0 && selectedGasto.descricao !== ""){
             selectedGasto.categoria = categoriasOptions.filter((obj) => {
                 return obj.label === selectedGasto.categoria
@@ -46,7 +48,7 @@ const UpdateGastoDialog = (props) => {
                 return obj.label === selectedGasto.sub_categoria
             })[0]
 
-            selectedGasto.data = new Date(selectedGasto.data)
+            selectedGasto.data = stringToDate(selectedGasto.data, "YYYY-MM-DD")
             
         }
         setSelectedGasto(selectedGasto)
@@ -155,7 +157,7 @@ const UpdateGastoDialog = (props) => {
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
                                     label="Data"
-                                    inputFormat="MM/dd/yyyy"
+                                    inputFormat="dd/MM/yyyy"
                                     value={selectedGasto.data}
                                     onChange={(event) => {
                                         setSelectedGasto(prevState => ({

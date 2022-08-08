@@ -7,6 +7,7 @@ import './gastos-list.scss'
 import APIService from '../../http';
 import CreateGastoDialog from './create-gasto-dialog/create-gasto-dialog.component'
 import UpdateGastoDialog from './update-gasto-dialog/update-gasto-dialog.component'
+import { dateToString, stringToDate } from '../../utils/utils';
 
 
 const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
@@ -98,8 +99,8 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
       headerName: 'Data',
       width: 96,
       valueGetter: (params) =>{
-        const date = new Date(params.value)
-        return date.toLocaleString().slice(0, 10)
+        const date = stringToDate(params.value, "YYYY-MM-DD")
+        return dateToString(date, "DD/MM/YYYY")
       }
     },
     { field: 'valor',
@@ -147,8 +148,8 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}) => {
             <DataGrid
               rows={gastos}
               columns={columns}
-              pageSize={20}
-              rowsPerPageOptions={[20]}
+              pageSize={11}
+              rowsPerPageOptions={[11]}
               components={
                 { Toolbar: GridToolbar }
               }

@@ -112,7 +112,6 @@ const CreateReceitaDialog = (props) => {
                         </div>
                     </div>
                 </div>
-
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCreateReceita} disabled={!validateForm()}>Adicionar</Button>
