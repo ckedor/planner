@@ -1,1 +1,51 @@
-[]
+[
+  {
+    "_id": "2abf5d35-1c9d-4c83-b3c1-b1954aec4120",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://prod-auth.nubank.com.br/api/token",
+    "url": "https://prod-auth.nubank.com.br/api/token",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-08-03T23:09:37.776Z",
+    "modified": "2022-08-03T23:09:37.888Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "35ea66d4-de65-4b9a-ba65-5c9c031cd2f9",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://prod-customers.nubank.com.br/api/customers",
+    "url": "https://prod-customers.nubank.com.br/api/customers",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-08-03T23:09:56.135Z",
+    "modified": "2022-08-03T23:12:14.401Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      },
+      {
+        "name": "X-Correlation-Id",
+        "value": "WEB-APP.jO4x1"
+      },
+      {
+        "name": "User-Agent",
+        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
+      },
+      {
+        "name": "Origin",
+        "value": "https://conta.nubank.com.br"
+      },
+      {
+        "name": "Referer",
+        "value": "https://conta.nubank.com.br/"
+      }
+    ],
+    "params": [],
+    "tests": []
+  }
+]

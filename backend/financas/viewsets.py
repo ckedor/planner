@@ -40,7 +40,7 @@ class GastoViewSet(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=False)
     def por_categoria(self, request, pk=None):
         user_id = request.user.id
-        gastos = Gasto.objects.filter(user_id=user_id)
+        gastos = Gasto.objects.filter(user_id=user_id).order_by('-data')
         month = request.query_params.get('month', None)
 
         if month:
