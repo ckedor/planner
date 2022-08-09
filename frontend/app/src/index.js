@@ -23,7 +23,6 @@ root.render(
             <Route path="/dashboard/financas" element={<Financas />}>
               <Route index  element={<Gastos />}/>
               <Route path='/dashboard/financas/evolucao_patrimonio' element={<EvolucaoPatrimonio />} />
-              
             </Route>
           </Route>
           <Route path="/" element={<Navigate to="/dashboard" replace />}></Route>

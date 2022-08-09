@@ -61,7 +61,7 @@ const GastosPieChart = ({chartData, receitas }) => {
         <div>
             <div className="gastos-pie-chart">
                 <div className="row">
-                    {!somaGastos ? <div className="col-4"></div> :
+                    {!somaReceitas ? <div className="col-4"></div> :
                         <div className="col-4">
                             <Card>
                                 <CardContent>

@@ -7,8 +7,11 @@ export const dateToString = (date, format) => {
         date = new Date(date.getTime() - (offset*60*1000))
         return date.toISOString().split('T')[0]
     } else if (format === "DD/MM/YYYY"){
-        date = new Date(date)
         return date.toLocaleString().slice(0, 10)
+    } else if (format == "monthShortName") {
+        const monthShortNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+            "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        return monthShortNames[date.getMonth()]
     }
     return date.toLocaleDateString()
 }
@@ -19,11 +22,15 @@ export const stringToDate = (strDate, format) => {
     }
 }
 
+export const sortArrayOfDates = (arrayOfDates) => {
+    return arrayOfDates.sort((a,b) =>{
+        return a - b
+    })
+}
+
 // Arrays
 export const sumObjectArrayProperty = (array, property) => {
     return array?.reduce((acc, obj) => {
-        console.log(acc, obj)
-        console.log(typeof(obj[property]))
         return acc + obj[property];
     }, 0)
 }

@@ -13,13 +13,13 @@ const EvolucaoPatrimonio = () => {
                     </Paper>
                 </div>
             </div>
-            <div className="row evolucao-patrimonio">
+            {/* <div className="row evolucao-patrimonio">
                 <div className="col-12">
                     <Paper>
                         <EvolucaoPatrimonioBarChart />
                     </Paper>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

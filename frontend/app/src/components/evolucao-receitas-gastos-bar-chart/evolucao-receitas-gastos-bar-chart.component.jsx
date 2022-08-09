@@ -1,69 +1,66 @@
 import { useEffect, useState } from "react"
 import ReactApexChart from "react-apexcharts"
 import APIService from "../../http"
-import { dateToString, numberToLocaleCurrencyString } from "../../utils/utils"
+import { dateToString, numberToLocaleCurrencyString, sortArrayOfDates, stringToDate } from "../../utils/utils"
 import './evolucao-receitas-gastos-bar-chart.scss'
 
 const EvolucaoReceitasGastosBarChart = () => {
 
+    const RANGE_MONTHS = 12
+
     const apiService = new APIService()
-    const [gastosData, setGastosData] = useState({})
-    const [receitasData, setReceitasData] = useState({})
-    
+    const [chartData, setChartData] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const [options, setOptions] = useState({})
-    const [series, setSeries] = useState([{
-                name: 'Receitas',
-                type: 'column',
-                data: [7300, 7300, 7300, 7300, 7300, 7300, 7300, 7300, 7300]
-            }, {
-                name: 'Gastos',
-                type: 'column',
-                data: [6000, 6000, 6000, 5000, 6666, 7777, 4700, 6000, 6000]
-            }, {
-                name: 'Lucro',
-                type: 'line',
-                data: [1300, 1300, 1300, 2300, 600, -200, 2000, 1300, 1300]
-            }
-        ])
+    const [series, setSeries] = useState([])
 
-    useEffect( () =>{
-        mountChart();
+    useEffect(() =>{
+        setLoading(true)
+        getChartData()
     }, []); //eslint-disable-line
 
-    const getGastos = () => {
-        apiService.get("financas/gastos/por_mes", { month: dateToString(new Date(), "MM/YYYY") })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.data
-                }
-                alert("Erro ao pegar gastos")
-            })
-            .then(returnData => {
-                console.log(returnData)
-            }
-        )
+    useEffect(() =>{
+        mountChart()
+    }, [chartData]); //eslint-disable-line
+    
+    const getChartData = async () => {
+        try {
+            let gastosResponse = await apiService.get("financas/gastos_receitas/", { current_month: dateToString(new Date(), "MM/YYYY"), range: RANGE_MONTHS })
+            setChartData(gastosResponse.data)
+        } catch (err) {
+            alert("Erro ao buscar dados na API")
+        }
+        setLoading(false)
     }
-
-    const getReceitasData = () => {
-        apiService.get("financas/receitas/por_mes", { month: dateToString(new Date(), "MM/YYYY") })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.data
-                }
-                alert("Erro ao pegar receitas")
-            })
-            .then(returnData => {
-                console.log(returnData)
-            }
-        )
+    
+    const getMonthsFromAPIData = (data) =>{
+        let months = data.months.map((dateStr) => {
+            let date = stringToDate(dateStr, "YYYY-MM-DD")
+            return dateToString(date, "monthShortName")
+        })
+        return months
     }
 
     const mountChart = () => {
-        // if (!chartData){
-        //     return
-        // }
-        const categories = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set']
+        if (!chartData){
+            return
+        }
+        const categories = getMonthsFromAPIData(chartData)
+        setSeries([{
+                name: 'Receitas',
+                type: 'column',
+                data: chartData.receitas
+            }, {
+                name: 'Gastos',
+                type: 'column',
+                data: chartData.gastos
+            }, {
+                name: 'Lucro',
+                type: 'line',
+                data: chartData.lucros
+            }
+        ])
 
         setOptions({
             chart: {
@@ -131,6 +128,7 @@ const EvolucaoReceitasGastosBarChart = () => {
 
         })
     }
+
 
     return (
         <div className="evolucao-receitas-chart-container">
