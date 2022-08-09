@@ -17,6 +17,7 @@ router.register(r'financas/receitas', ReceitaViewSet, basename='receita')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include('financas.urls')),
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), 
     path('admin/', admin.site.urls),

@@ -219,5 +219,76 @@
       }
     },
     "tests": []
+  },
+  {
+    "_id": "7a0860cb-b8e2-4efa-86ac-97fd6a0e8cb3",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+    "name": "/gastos/por_intervalo_data",
+    "url": "http://127.0.0.1:8000/financas/gastos/por_intervalo_data?current_month=08/2022",
+    "method": "GET",
+    "sortNum": 9375,
+    "created": "2022-08-09T01:00:06.733Z",
+    "modified": "2022-08-09T01:04:13.937Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de",
+        "isDisabled": true
+      }
+    ],
+    "params": [
+      {
+        "name": "current_month",
+        "value": "08/2022",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "admin",
+        "password": "senhafacil"
+      }
+    },
+    "tests": []
+  },
+  {
+    "_id": "7644a7ad-4c3e-4126-bc32-7d7ff5215bae",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+    "name": "/receitas/por_intervalo_data",
+    "url": "http://127.0.0.1:8000/financas/gastos_receitas?current_month=08/2022&range=11",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-08-09T01:40:49.913Z",
+    "modified": "2022-08-09T17:17:58.047Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de",
+        "isDisabled": true
+      }
+    ],
+    "params": [
+      {
+        "name": "current_month",
+        "value": "08/2022",
+        "isPath": false
+      },
+      {
+        "name": "range",
+        "value": "11",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "admin",
+        "password": "senhafacil"
+      }
+    },
+    "tests": []
   }
 ]
