@@ -24,7 +24,7 @@ export const stringToDate = (strDate, format) => {
 
 export const sortArrayOfDates = (arrayOfDates) => {
     return arrayOfDates.sort((a,b) =>{
-        return a - b
+        return a - b;
     })
 }
 
@@ -35,28 +35,53 @@ export const sumObjectArrayProperty = (array, property) => {
     }, 0)
 }
 
-export const sort = (property) => {
-    var sortOrder = 1;
-    if(property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
+export const sortArrayByProperty = (array, property, order="asc") => {
+    function compare_asc(a,b){
+        if (a[property] < b[property])
+            return -1;
+        if (a[property] > b[property])
+            return 1;
+        return 0;
     }
-    return function (a,b) {
-        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-        return result * sortOrder;
+
+    function compare_desc(a,b){
+        if (a[property] > b[property])
+            return -1;
+        if (a[property] < b[property])
+            return 1;
+        return 0;
     }
+
+    if (order === "asc")
+        return array.sort(compare_asc) 
+    else 
+        return array.sort(compare_desc)
 }
 
-export const sortMultiple = (arg1, arg2) => {
-    var props = [arg1, arg2];
-    return function (obj1, obj2) {
-        var i = 0, result = 0, numberOfProperties = props.length;
-        while(result === 0 && i < numberOfProperties) {
-            result = sort(props[i])(obj1, obj2);
-            i++;
+export const groupBy = (array, keys, variable) => {
+    var i, key, temp, split;
+    var data = array.reduce((result,currentValue) => {
+        key = "";
+        for(i = 0; i < keys.length; i++) {
+            key = key + currentValue[keys[i]] + "_";
         }
+        if(!result[key]) {
+            result[key] = 0;
+        }
+        result[key] += parseFloat(currentValue[variable]);
         return result;
-    }
+    }, {});
+    var grouped = [];
+    Object.keys(data).forEach(function(key) {
+        temp = {};
+        split = key.split("_");
+        for(i=0; i < split.length - 1; i++) {
+            temp[keys[i]] = split[i]
+        }
+        temp[variable] = data[key];
+        grouped.push(temp);
+    });
+    return grouped;
 }
 
 // Number/Strings/Currency

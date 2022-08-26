@@ -2,6 +2,7 @@
 import { Skeleton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { groupBy, sortArrayByProperty } from '../../utils/utils';
 import './gastos-bar-chart.scss'
 
 const GastosBarChart = ({ chartData }) => {
@@ -24,6 +25,8 @@ const GastosBarChart = ({ chartData }) => {
         ['#AD7EDA', '#9A64CF', '#8E52CA', '#8040C1', '#7633BB', '#671FB1', '#5B15A4', '#510A9B', '#47048C'],
         ['#DA7EC9', '#D468C0', '#CC4BB4', '#BD2CA2', '#A01586', '#880970', '#73025D', '#49033C', '#22001C'],
         ['#272727', '#121212', '#2D2D2D', '#444444', '#5B5B5B', '#6E6E6E', '#7E7E7E', '#8D8D8D', '#ADADAD'],
+        ['#272727', '#121212', '#2D2D2D', '#444444', '#5B5B5B', '#6E6E6E', '#7E7E7E', '#8D8D8D', '#ADADAD'],
+        ['#272727', '#121212', '#2D2D2D', '#444444', '#5B5B5B', '#6E6E6E', '#7E7E7E', '#8D8D8D', '#ADADAD'], // TODO: Mudar cores para mais categorias
     ]
 
     const mountChart = () => {
@@ -31,7 +34,10 @@ const GastosBarChart = ({ chartData }) => {
             return
         }
 
-        const categories = [...new Set(chartData.map(obj => obj.categoria))]
+        sortArrayByProperty(chartData, "gastoTotal", "desc")
+
+        const categories_grouped_by_total = sortArrayByProperty(groupBy(chartData, ["categoria"], "gastoTotal" ), "gastoTotal", "desc")
+        const categories = [...new Set(categories_grouped_by_total.map(obj => obj.categoria))]
         const chartColors = mountSeriesFromChartData(categories)
         setOptions({
             chart: {

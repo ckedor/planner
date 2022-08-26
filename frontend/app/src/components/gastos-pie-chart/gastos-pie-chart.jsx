@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { numberToLocaleCurrencyString, sumObjectArrayProperty } from '../../utils/utils';
+import { numberToLocaleCurrencyString, sortArrayByProperty, sumObjectArrayProperty } from '../../utils/utils';
 import './gastos-pie-chart.scss'
 
 const GastosPieChart = ({chartData, receitas }) => {
@@ -21,6 +21,8 @@ const GastosPieChart = ({chartData, receitas }) => {
         if (!chartData){
             return
         }
+
+        chartData = sortArrayByProperty(chartData, "gastoTotal", "desc")
 
         setSeries(chartData.map(obj => obj.gastoTotal))
         const labels = chartData.map(obj => obj.categoria)
