@@ -1,0 +1,30 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10.4"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_email: christian.kedor@gmail.com
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: multi-planner-api
+          justlogin: true
+      - name: Deploy to Heroku
+        run: |
+          git remote add back https://git.heroku.com/multi-planner-api.git
+          git push back `git subtree split --prefix backend main`:main --force
