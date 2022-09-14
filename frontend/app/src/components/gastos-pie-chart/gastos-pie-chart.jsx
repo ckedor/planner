@@ -15,7 +15,7 @@ const GastosPieChart = ({chartData, receitas }) => {
         mountChart();
         setSomaGastos(sumObjectArrayProperty(chartData, "gastoTotal"))
         setSomaReceitas(sumObjectArrayProperty(receitas, "valor"))
-    }, [chartData]); // eslint-disable-line
+    }, [chartData, receitas]); // eslint-disable-line
 
     const mountChart = () => {
         if (!chartData){

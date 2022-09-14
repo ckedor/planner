@@ -20,10 +20,8 @@ const Gastos = () => {
     const [openCreateReceitaDialog, setOpenCreateReceitaDialog] = useState(false)
     const [receitasData, setReceitasData] = useState(null)
     const [gastosIsLoading, setGastosIsLoading] = useState(true)
-    const [receitasIsLoading, setReceitasIsLoading] = useState(true)
 
     useEffect(() => {
-        setReceitasIsLoading(true)
         setGastosIsLoading(true)
         getGastosPorCategoriaMonth()
         getReceitasData()
@@ -54,22 +52,21 @@ const Gastos = () => {
             })
             .then(returnData => {
                 setReceitasData(returnData.results)
-                setReceitasIsLoading(false)
             }
         )
     }
 
     const createReceita = (receita) =>{
-    apiService.post("financas/receitas/", receita)
-        .then(response => {
-            if (response.status === 201) {
-                return response.data
-            }
-            alert("Erro ao criar receita")
-        })
-        .then(returnData => {
-            getReceitasData()
-        })
+        apiService.post("financas/receitas/", receita)
+            .then(response => {
+                if (response.status === 201) {
+                    return response.data
+                }
+                alert("Erro ao criar receita")
+            })
+            .then(returnData => {
+                getReceitasData()
+            })
     }
 
     return (
