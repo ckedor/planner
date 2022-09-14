@@ -1,0 +1,27 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_email: christian.kedor@gmail.com
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: multi-planner-front
+          justlogin: true
+      - name: Deploy to Heroku
+        run: |
+          git remote add front https://git.heroku.com/multi-planner-front.git
+          git push front `git subtree split --prefix frontend/app main`:main --force
