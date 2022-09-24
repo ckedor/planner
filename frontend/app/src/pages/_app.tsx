@@ -7,9 +7,6 @@ import '../styles.scss'
 function MyApp({ Component, pageProps }: AppProps) {
   return(
     <AuthProvider>
-      <Head>
-        <link rel="icon" href="/favicon.png" />
-      </Head>
       <Component {...pageProps} />
     </AuthProvider>
   ) 

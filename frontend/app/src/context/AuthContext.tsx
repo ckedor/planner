@@ -21,7 +21,6 @@ type SignInData = {
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }:{children:any}){
-    console.log("Entrou no authprovider")
     const [username, setUsername] = useState<string | null>(null)
     const [loading, setLoading] = useState(true)
 
@@ -67,7 +66,6 @@ export function AuthProvider({ children }:{children:any}){
         if (loading){
             setLoading(false)
         }
-        console.log("Atualizou o token")
     }
 
     async function signIn({ username, password }: SignInData){
