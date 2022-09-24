@@ -1,0 +1,33 @@
+.login_wrapper{
+    margin-top: 100px;
+}
+
+.form_wrapper{
+    background-color: rgb(236, 236, 244);
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    min-width: 250px;
+    border: 1px solid rgba(230, 230, 240, 0.767);
+}
+
+.button_wrapper {
+    padding: 20px 22px 10px 22px;
+}
+
+.input_wrapper{
+    margin: 10px 0px;
+}
+
+.input_field{
+    width: 100%;
+}
+
+.login_title{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.password-error-message {
+    color: red;
+    position: absolute;
+}

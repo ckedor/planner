@@ -1,0 +1,73 @@
+.navbar{
+    z-index: 100000;
+    max-height: 56px;
+}
+
+.navbar_brand{
+    margin-left: 15px;
+}
+
+.navbar_brand_img{
+    margin-right: 5px;
+}
+
+.navbar_brand_title {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar_brand_subtitle{
+    margin: 0;
+    padding: 0;
+    font-size: 0.7rem;
+    bottom: 20px;
+    position: relative;
+    bottom: 5px;
+}
+
+.navbar_logout{
+    padding-right: 64px;
+}
+
+.navbar_logout{
+    margin-right: 20px;
+}
+
+.navbar_logout_button {
+    text-decoration: none;
+    color:azure
+}
+
+.navbar_logout_button:hover{
+    text-decoration: none;
+    color:rgb(156, 156, 156)!important;
+}
+
+.navbar_logout_button:hover .navbar_logout_icon{
+    text-decoration: none;
+    color:rgb(156, 156, 156)!important;
+}
+
+
+.navbar_logout_button:active {
+    box-shadow: none;
+    outline: none;
+}
+
+.navbar_logout_icon{
+    color:azure;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out;
+}
+
+
+
+.navbar_user{
+    margin-right: 10px;
+}
+
+.navbar_user_icon{
+    position: relative;
+    bottom: 1px;
+    right: 1px;
+}

@@ -8,8 +8,7 @@ from rest_framework.response import Response
 from financas.models import CategoriaGasto, Gasto, Receita, SubCategoriaGasto
 from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, ReceitaCreateSerializer, ReceitaGetSerializer, SubCategoriaGastoSerializer
 from django.db.models import F, Sum
-from django.db.models.functions import TruncMonth, Coalesce
-from django.db.models import DecimalField
+from django.db.models.functions import TruncMonth
 import pandas as pd
 
 class CategoriaGastoViewSet(viewsets.ModelViewSet):
