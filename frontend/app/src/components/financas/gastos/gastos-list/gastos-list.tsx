@@ -60,7 +60,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}:{gastosData:any, handleG
                      sub_categoria:gasto.sub_categoria.id}
 
     const {message, status} = await apiService.put("financas/gastos/" + gasto.id + "/", gastoJSON)
-    if (status === 201)
+    if (status === 200)
       handleGastosAPIUpdate()
     else 
       alert(`Erro ao editar gasto. Erro: ${message}`)
