@@ -42,6 +42,7 @@ const EvolucaoReceitasGastosBarChart = () => {
             return
         }
         const categories = getMonthsFromAPIData(chartData)
+
         setSeries([{
                 name: 'Receitas',
                 type: 'column',
@@ -102,6 +103,8 @@ const EvolucaoReceitasGastosBarChart = () => {
                 colors: ['transparent', 'transparent', '#454545']
             },
             yaxis: {
+                min: -6500,
+                max: 19000,
                 title: {
                   text: 'R$'
                 }
