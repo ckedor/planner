@@ -5,13 +5,12 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { AuthContext } from '../context/AuthContext';
-import Router from 'next/router'
 import Login from '../pages/login';
 
 function DashboardFinancasLayout ({ children }:{ children:any }, ) {
 
     const financasMenuItems = [{name: 'Gastos', link: '/dashboard/financas/gastos', icon: <AttachMoneyIcon />},
-                             {name: 'Evolução Gastos', link: '/dashboard/financas/evolucao_gastos', icon: <TimelineIcon />},
+                             {name: 'Evolução Gastos', link: '/dashboard/financas/evolucao-gastos', icon: <TimelineIcon />},
                              {name: 'Carteira', link: '/dashboard/financas/carteira', icon: <SavingsIcon />},
                             ]
     

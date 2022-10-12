@@ -8,7 +8,7 @@ const EvolucaoReceitasGastosBarChart = () => {
 
     const RANGE_MONTHS = 12
     const [chartData, setChartData] = useState<any>(null)
-
+    
     const [options, setOptions] = useState({})
     const [series, setSeries] = useState<any[]>([])
 

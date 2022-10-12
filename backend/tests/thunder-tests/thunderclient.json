@@ -290,5 +290,43 @@
       }
     },
     "tests": []
+  },
+  {
+    "_id": "1d177793-dc1a-4df5-9a2c-7bdab18e35ba",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "d1cebbd7-289e-4055-8ea5-5aedb3aecc84",
+    "name": "/gastos/por_categoria_month_range",
+    "url": "http://127.0.0.1:8001/financas/gastos/por_categoria_month_range?current_month=09/2022&range=11",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-09-25T21:57:16.893Z",
+    "modified": "2022-09-25T22:01:56.216Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Token 46efca4785e0edfdacec480e66dfbec2c29925de",
+        "isDisabled": true
+      }
+    ],
+    "params": [
+      {
+        "name": "current_month",
+        "value": "09/2022",
+        "isPath": false
+      },
+      {
+        "name": "range",
+        "value": "11",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "ckedor",
+        "password": "a71397Ck?"
+      }
+    },
+    "tests": []
   }
 ]

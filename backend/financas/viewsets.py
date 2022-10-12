@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from financas.models import CategoriaGasto, Gasto, Receita, SubCategoriaGasto
 from financas.serializers import CategoriaGastoSerializer, GastoCreateSerializer, GastoGetSerializer, ReceitaCreateSerializer, ReceitaGetSerializer, SubCategoriaGastoSerializer
-from django.db.models import F, Sum
+from django.db.models import F, Sum, Max
 from django.db.models.functions import TruncMonth
 import pandas as pd
 
@@ -67,6 +67,33 @@ class GastoViewSet(viewsets.ModelViewSet):
                     "gastos_por_subcategoria":gastos_por_subcategoria,
                     "gastos_por_categoria":gastos_por_categoria}
         
+        return Response(response)
+    
+    @action(methods=['GET'], detail=False)
+    def por_categoria_month_range(self, request, pk=None):
+        DEFAULT_MONTH_RANGE = 12
+        user_id = request.user.id
+
+        current_month = request.query_params.get('current_month', None)
+        month_range = int(request.query_params.get('range', DEFAULT_MONTH_RANGE))
+        current_month = datetime.datetime.strptime(current_month, "%m/%Y")
+        first_month = current_month - pd.DateOffset(months=month_range)
+
+        gastos = Gasto.objects.filter(user_id=user_id,
+                                    data__range=[first_month - pd.DateOffset(months=1), 
+                                               current_month + pd.DateOffset(months=1)])\
+                                    .order_by('-data')
+        
+        gastos_por_subcategoria = gastos.values(subcategoria=F('sub_categoria__nome'),
+                                                categoria=F('sub_categoria__categoria__nome'),
+                                                )\
+                                        .annotate(month=TruncMonth('data'))\
+                                        .values('month', 'subcategoria', 'categoria')\
+                                        .annotate(gastoTotal=Sum('valor'), data=Max('month'))\
+                                        .values('month', 'gastoTotal', 'subcategoria', 'categoria')\
+                                        .order_by('month', 'categoria', 'subcategoria')
+        
+        response = {"gastos_por_subcategoria":gastos_por_subcategoria}
         return Response(response)
     
 class ReceitaViewSet(viewsets.ModelViewSet):
