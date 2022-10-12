@@ -1,7 +1,7 @@
 import { MenuItem, Select } from "@mui/material"
 import { useEffect, useState } from "react"
 import ReactApexChart from "react-apexcharts"
-import { dateToString, stringToDate } from "../../../../util/utils"
+import { dateToString, numberToLocaleCurrencyString, stringToDate } from "../../../../util/utils"
 import './evolucao-gastos-categoria-bar-chart.module.scss'
 
 type GastoPorSubcategoriaMes = {
@@ -100,6 +100,23 @@ const EvolucaoGastosCategoriaBarChart = ({gastos_por_subcategoria, categorias}:{
             },
             fill: {
                 opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: (val:any) => {
+                        return numberToLocaleCurrencyString(val)
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: (val:any, opts:any) => {
+                  return opts.w.globals.seriesNames[opts.seriesIndex];
+                },
+                style: {
+                    fontSize: '12px',
+                    colors: ["white"]
+                },
             },
             colors:['#7EADDA', '#6EA4D7', '#5590C8', '#3876B1', '#23619C', '#16538C', '#0A4073', '#04335F', '#012546'],
         })
