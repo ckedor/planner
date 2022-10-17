@@ -6,7 +6,6 @@ export async function delay(delayInms:any) {
 // Date/Time
 export function dateToString(date:Date, format:string) {
     if (format === "MM/YYYY"){
-        console.log("################", date.toLocaleDateString('pt-br').slice(3))
         return date.toLocaleDateString('pt-br').slice(3)
     } else if (format === "YYYY-MM-DD"){
         const offset = date.getTimezoneOffset()

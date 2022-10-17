@@ -16,7 +16,7 @@ const EvolucaoGastosCategoriaBarChart = dynamic(
 )
 
 type GastoPorSubcategoriaMes = {
-    subcategoria: string,
+    subcategoriaId: number,
     categoria: string,
     month: string,
     gastoTotal: number,
@@ -72,7 +72,6 @@ export async function getServerSideProps(context:any) {
                                                             {current_month: dateToString(new Date(), "MM/YYYY"), 
                                                                 range: RANGE_MONTHS })
     const categorias = await apiService.get("financas/categorias_gasto/")
-    console.log(data)
     return {
         props: {
             gastos_por_subcategoria: data.gastos_por_subcategoria,

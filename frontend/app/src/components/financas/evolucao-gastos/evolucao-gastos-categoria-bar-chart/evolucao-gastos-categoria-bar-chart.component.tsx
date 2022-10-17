@@ -5,7 +5,7 @@ import { dateToString, numberToLocaleCurrencyString, stringToDate } from "../../
 import './evolucao-gastos-categoria-bar-chart.module.scss'
 
 type GastoPorSubcategoriaMes = {
-    subcategoria: string,
+    subcategoriaId: number,
     categoria: string,
     month: string,
     gastoTotal: number,
@@ -48,15 +48,15 @@ const EvolucaoGastosCategoriaBarChart = ({gastos_por_subcategoria, categorias}:{
         })
 
         subcategorias.map((obj:SubCategoria) => {
-            series.push({name: obj.nome, data: []})
+            series.push({name: obj.nome, id:obj.id, data: []})
         })
 
         series.map((obj:any)=>{
             
-            const name = obj.name
+            const id = obj.id
             dates.map((monthStr:string ) => {
                 const gastosArr = gastos_por_subcategoria.filter((gastoPorSubcategoriaMes:GastoPorSubcategoriaMes) => {
-                    return gastoPorSubcategoriaMes.month === monthStr && gastoPorSubcategoriaMes.subcategoria === name
+                    return gastoPorSubcategoriaMes.month === monthStr && gastoPorSubcategoriaMes.subcategoriaId === id
                 })
                 if (gastosArr.length > 0){
                     obj.data.push(gastosArr[0].gastoTotal)
@@ -66,7 +66,6 @@ const EvolucaoGastosCategoriaBarChart = ({gastos_por_subcategoria, categorias}:{
             })
         })
 
-        console.log(series)
         dates = dates.map((monthStr:string ) => {
             const date = stringToDate(monthStr, "YYYY-MM-DD")
             return dateToString(date as Date, "monthShortName")

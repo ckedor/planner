@@ -84,14 +84,14 @@ class GastoViewSet(viewsets.ModelViewSet):
                                                current_month + pd.DateOffset(months=1)])\
                                     .order_by('-data')
         
-        gastos_por_subcategoria = gastos.values(subcategoria=F('sub_categoria__nome'),
+        gastos_por_subcategoria = gastos.values(subcategoriaId=F('sub_categoria'),
                                                 categoria=F('sub_categoria__categoria__nome'),
                                                 )\
                                         .annotate(month=TruncMonth('data'))\
-                                        .values('month', 'subcategoria', 'categoria')\
+                                        .values('month', 'subcategoriaId', 'categoria')\
                                         .annotate(gastoTotal=Sum('valor'), data=Max('month'))\
-                                        .values('month', 'gastoTotal', 'subcategoria', 'categoria')\
-                                        .order_by('month', 'categoria', 'subcategoria')
+                                        .values('month', 'gastoTotal', 'subcategoriaId', 'categoria')\
+                                        .order_by('month', 'categoria', 'subcategoriaId')
         
         response = {"gastos_por_subcategoria":gastos_por_subcategoria}
         return Response(response)
