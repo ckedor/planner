@@ -67,10 +67,12 @@ export async function getServerSideProps(context:any) {
     
     const RANGE_MONTHS = 12
     const apiService = new APIService(context.req)
+
     const { data, message, status} = await apiService.get("financas/gastos/por_categoria_month_range",
                                                             {current_month: dateToString(new Date(), "MM/YYYY"), 
                                                                 range: RANGE_MONTHS })
     const categorias = await apiService.get("financas/categorias_gasto/")
+    console.log(data)
     return {
         props: {
             gastos_por_subcategoria: data.gastos_por_subcategoria,

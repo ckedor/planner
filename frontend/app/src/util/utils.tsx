@@ -6,13 +6,14 @@ export async function delay(delayInms:any) {
 // Date/Time
 export function dateToString(date:Date, format:string) {
     if (format === "MM/YYYY"){
-        return date.toLocaleDateString().slice(3)
+        console.log("################", date.toLocaleDateString('pt-br').slice(3))
+        return date.toLocaleDateString('pt-br').slice(3)
     } else if (format === "YYYY-MM-DD"){
         const offset = date.getTimezoneOffset()
         date = new Date(date.getTime() - (offset*60*1000))
         return date.toISOString().split('T')[0]
     } else if (format === "DD/MM/YYYY"){
-        return date.toLocaleString().slice(0, 10)
+        return date.toLocaleString('pt-br').slice(0, 10)
     } else if (format == "monthShortName") {
         const monthShortNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
             "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
