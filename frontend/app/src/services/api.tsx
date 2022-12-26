@@ -116,7 +116,7 @@ class APIService {
     handleError(error:any){
         if (error.response) {
             const status = error.response.status
-            const ret = {data:{}, message: ErrorMessage.GENERIC, detail:error.response.data?.detail, status:status}
+            const ret = {data:error.response.data, message: ErrorMessage.GENERIC, detail:error.response.data?.detail, status:status}
             if (status === HttpStatus.UNAUTHORIZED)
                 ret.message = ErrorMessage.UNAUTHORIZED
             if (status === HttpStatus.BAD_REQUEST)

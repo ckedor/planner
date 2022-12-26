@@ -42,13 +42,13 @@ export function AuthProvider({ children }:{children:any}){
             refreshAccessToken(refreshToken)
         } 
         
-        let fourMinutes = 1000 * 60 * 4
+        const time = 1000 * 60 * 60
         let interval = setInterval(() => {
             if(authTokens){
                 const refreshToken = JSON.parse(authTokens).refresh
                 refreshAccessToken(refreshToken)
             }
-        }, fourMinutes)
+        }, time)
         return () => clearInterval(interval)
 
 
