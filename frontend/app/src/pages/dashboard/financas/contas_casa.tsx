@@ -40,7 +40,7 @@ const ContasCasa = () => {
         if (status !== 200){
             alert("erro")
         } else {
-            if (data.length() > 0)
+            if (data.length > 0)
                 setContasCasa(data[0])
         }
     }
