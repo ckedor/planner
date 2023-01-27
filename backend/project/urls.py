@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
+from contas_casa.views.contas_casa import ContaExtraViewset, ContasCasaViewset
 
 from financas.viewsets import CategoriaGastoViewSet, GastoViewSet, ReceitaViewSet, SubCategoriaGastoViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -14,6 +15,8 @@ router.register(r'financas/categorias_gasto', CategoriaGastoViewSet)
 router.register(r'financas/sub_categorias_gasto', SubCategoriaGastoViewSet)
 router.register(r'financas/gastos', GastoViewSet, basename='gasto')
 router.register(r'financas/receitas', ReceitaViewSet, basename='receita')
+router.register(r'contas_casa/contas_casa', ContasCasaViewset, basename='contas_casa')
+router.register(r'contas_casa/conta_extra', ContaExtraViewset, basename='conta_extra')
 
 urlpatterns = [
     path('', include(router.urls)),

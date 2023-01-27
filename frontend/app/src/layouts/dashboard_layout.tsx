@@ -6,12 +6,13 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { AuthContext } from '../context/AuthContext';
 import Login from '../pages/login';
+import HouseIcon from '@mui/icons-material/House';
 
 function DashboardFinancasLayout ({ children }:{ children:any }, ) {
 
     const financasMenuItems = [{name: 'Gastos', link: '/dashboard/financas/gastos', icon: <AttachMoneyIcon />},
                              {name: 'Evolução Gastos', link: '/dashboard/financas/evolucao-gastos', icon: <TimelineIcon />},
-                             {name: 'Carteira', link: '/dashboard/financas/carteira', icon: <SavingsIcon />},
+                             {name: 'Contas da Casa', link: '/dashboard/financas/contas_casa', icon: <HouseIcon />},
                             ]
     
     const {isAuthenticated} = useContext(AuthContext)

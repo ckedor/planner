@@ -75,7 +75,7 @@ export async function getServerSideProps(context:any) {
     return {
         props: {
             gastos_por_subcategoria: data.gastos_por_subcategoria,
-            categorias: categorias.data.results
+            categorias: categorias.data
         }, 
     }
 }

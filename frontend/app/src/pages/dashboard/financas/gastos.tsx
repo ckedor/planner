@@ -21,6 +21,7 @@ const GastosBarChart = dynamic(
 
 import GastosList from '../../../components/financas/gastos/gastos-list/gastos-list';
 import CreateReceitaDialog from '../../../components/financas/gastos/create-receita-dialog/create-receita-dialog.component';
+import MonthInput from '../../../components/common/month-input/month-input';
 
 const Gastos = () => {
 
@@ -49,7 +50,7 @@ const Gastos = () => {
     async function getReceitasData () {
         const apiService = new APIService()
         const {data, message, status} = await apiService.get("financas/receitas/", { month: dateToString(selectedMonth, "MM/YYYY") })
-        setReceitasData(data.results)
+        setReceitasData(data)
     }
 
     async function createReceita(receita:any) {
@@ -67,17 +68,7 @@ const Gastos = () => {
             <div className="container-xl">
                 <div className={"row " + styles.gastos_month_select}>
                     <div className="col-2">
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                views={['year', 'month']}
-                                label="Mês Selecionado"
-                                minDate={new Date('2012-03-01')}
-                                inputFormat="MM/yyyy"
-                                value={selectedMonth}
-                                onChange={(event) => {changeDate(event)}}
-                                renderInput={(params) => <TextField {...params} helperText={null} />}
-                            />
-                        </LocalizationProvider>
+                        <MonthInput value={selectedMonth} onChange={(event:any) => setSelectedMonth(event)}/>
                     </div>
                     <div className="col-8"></div>
                     <div className={"col-2 " + styles.adicionar_receita_button}>

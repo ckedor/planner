@@ -1,7 +1,7 @@
 import React from 'react';
 import DashboardFinancasLayout from '../../../layouts/dashboard_layout';
 
-const Carteira = () => {
+const ContasCasa = () => {
 
     return (
         <>
@@ -11,4 +11,4 @@ const Carteira = () => {
     );
 };
 
-export default Carteira
+export default ContasCasa

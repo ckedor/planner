@@ -328,5 +328,25 @@
       }
     },
     "tests": []
+  },
+  {
+    "_id": "43a0c7c0-f497-4f36-abd8-b82de3413316",
+    "colId": "1e7ffe02-7f7b-452f-98ae-7bf5ade08f87",
+    "containerId": "1ebeaad3-662f-4b4a-bfd5-797ac29f8df6",
+    "name": "get_contas_casa",
+    "url": "http://localhost:8001/contas_casa/contas_casa?month=01/2023",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-01-19T18:50:35.410Z",
+    "modified": "2023-01-19T18:54:24.144Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "month",
+        "value": "01/2023",
+        "isPath": false
+      }
+    ],
+    "tests": []
   }
 ]

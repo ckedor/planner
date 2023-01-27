@@ -39,7 +39,7 @@ const GastosList = ({gastosData, handleGastosAPIUpdate}:{gastosData:any, handleG
   async function getCategorias() {
     const apiService = new APIService()
     const {data, message, status} = await apiService.get("financas/categorias_gasto/")
-    setCategorias(data.results)
+    setCategorias(data)
     setLoading(false)
   }
 
