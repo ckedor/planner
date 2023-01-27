@@ -40,7 +40,8 @@ const ContasCasa = () => {
         if (status !== 200){
             alert("erro")
         } else {
-            setContasCasa(data[0])
+            if (data.length() > 0)
+                setContasCasa(data[0])
         }
     }
 
@@ -206,7 +207,7 @@ const ContasCasa = () => {
                                 </Grid>
                                 <Grid item xs={8}>
                                     <Typography variant="h6" pr={2} sx={{fontWeight:'bold'}}>
-                                        R$ {calculateTotal(formValues)}
+                                        R$ {calculateTotal()}
                                     </Typography>
                                 </Grid>
                             </Grid>
