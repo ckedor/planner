@@ -16,6 +16,7 @@ class ContasCasa(models.Model):
     extra_iptu = models.DecimalField(max_digits=10, decimal_places=2)
     caixinha = models.DecimalField(max_digits=10, decimal_places=2)
     gas = models.DecimalField(max_digits=10, decimal_places=2)
+    pago = models.BooleanField(default=False)
     
 class Morador(models.Model):
     nome = models.CharField(max_length=100)

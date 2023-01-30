@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
+import { Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useEffect, useState } from "react";
@@ -7,11 +7,14 @@ import MonthInput from "../../../components/common/month-input/month-input";
 import useForm from "../../../hooks/use-form/use-form.hook";
 import DashboardFinancasLayout from "../../../layouts/dashboard_layout";
 import APIService from "../../../services/api";
-import { ContasCasa } from "../../../types/financas";
-import { dateToString } from "../../../util/utils";
-
+import { ContaExtra, ContasCasa, Morador } from "../../../types/financas";
+import { dateToString, numberToLocaleCurrencyString } from "../../../util/utils";
+import EditIcon from '@mui/icons-material/Edit';
+import ContaExtraDialogForm from "../../../components/financas/contas-casa/conta-extra-dialog-form";
+import AddIcon from '@mui/icons-material/Add';
 
 const initialFormValues:ContasCasa = {
+    id: 0,
     mes: '',
     piscina: 0,
     faxineira: 0,
@@ -21,12 +24,18 @@ const initialFormValues:ContasCasa = {
     agua: 0,
     extra_iptu: 0,
     caixinha: 0,
+    pago: false,
 }
 
 const ContasCasa = () => {
 
     const [selectedMonth, setSelectedMonth ] = useState(new Date())
+    const [editContaExtraDialog, setEditContaExtraDialog] = useState(false)
+    const [createContaExtraDialog, setCreateContaExtraDialog] = useState(false)
     const [contasCasa, setContasCasa] = useState<ContasCasa>(initialFormValues)
+    const [contasExtra, setContasExtra] = useState<ContaExtra[]>([])
+    const [moradores, setMoradores] = useState<Morador[]>([])
+    const [selectedContaExtra, setSelectedContaExtra] = useState<any>(null)
 
     useEffect(() => {
         getContasCasa()
@@ -36,12 +45,26 @@ const ContasCasa = () => {
     
     async function getContasCasa(){
         const apiService = new APIService()
-        const {data, status} = await apiService.get('/contas_casa/contas_casa', {month:dateToString(selectedMonth, 'MM/YYYY')})
+        let {data, status} = await apiService.get('/contas_casa/contas_casa', {month:dateToString(selectedMonth, 'MM/YYYY')})
         if (status !== 200){
             alert("erro")
         } else {
             if (data.length > 0)
                 setContasCasa(data[0])
+        }
+
+        let response = await apiService.get('/contas_casa/conta_extra', {month:dateToString(selectedMonth, 'MM/YYYY')})
+        if (response.status !== 200){
+            alert("erro")
+        } else {
+            setContasExtra(response.data)
+        }
+
+        response = await apiService.get('/contas_casa/moradores')
+        if (response.status !== 200){
+            alert("erro")
+        } else {
+            setMoradores(response.data)
         }
     }
 
@@ -63,14 +86,18 @@ const ContasCasa = () => {
     return (
         <DashboardFinancasLayout>
             <Container>
-                <Grid container>
+                <Grid container spacing={2}>
                     <Grid item xs={12} mt={3}>
                         <MonthInput value={selectedMonth} onChange={(event:any) => setSelectedMonth(event)}/>
                     </Grid>
                     <Grid item container xs={4} mt={5}>
                         <Paper elevation={5}>
-                            <Grid container spacing={2} pt={4} pb={4}>
-
+                            <Grid container spacing={2} pt={2} pb={4}>
+                                <Grid item xs={12}>
+                                    <Typography variant="h5" sx={{textAlign:'center'}} mb={1}>
+                                        Contas
+                                    </Typography>
+                                </Grid>
                                 <Grid item xs={4}>
                                     <Typography variant="h6" pr={2} sx={{textAlign:'right'}}>
                                         {'Água'}
@@ -213,8 +240,65 @@ const ContasCasa = () => {
                             </Grid>
                         </Paper>
                     </Grid>
+                    <Grid item container xs={5} mt={5}>
+                        <Paper elevation={5} sx={{width:'100%'}}>
+                            <Grid container spacing={2} pr={3} pl={3}>
+                                <Grid item xs={12} mt={2}>
+                                    <Typography variant="h5" sx={{textAlign:'center'}} mb={1}>
+                                        Extras
+                                    </Typography>
+                                </Grid>
+                                {contasExtra.map((contaExtra:ContaExtra)=>{
+                                    return (
+                                    <>
+                                    <Grid container item spacing={2} key={contaExtra.id}>
+                                        <Grid item xs={4}>
+                                            {contaExtra.descricao}
+                                        </Grid>
+                                        <Grid item xs={3}>
+                                            {numberToLocaleCurrencyString(contaExtra.valor)}
+                                        </Grid>
+                                        <Grid item xs={3}>
+                                            {contaExtra.dono.nome}
+                                        </Grid>
+                                        <Grid item xs={2}>
+                                            <IconButton sx={{postion:'relative', top:'-6px'}}onClick={() => {
+                                                setEditContaExtraDialog(true);
+                                                setSelectedContaExtra(contaExtra)
+                                                }}> 
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Divider sx={{borderColor:'black'}}></Divider>
+                                        </Grid>
+                                    </Grid>
+                                    </>
+                                    )
+                                })}
+                                <Grid item xs={2}>
+                                    <IconButton sx={{postion:'relative', top:'-6px'}}onClick={() => {
+                                        setCreateContaExtraDialog(true);
+                                        }}> 
+                                        <AddIcon />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
                 </Grid>
             </Container>
+            <ContaExtraDialogForm 
+                moradoresOptions={moradores}
+                open={editContaExtraDialog || createContaExtraDialog}
+                create={createContaExtraDialog}
+                handleClose={()=>{
+                    setEditContaExtraDialog(false)
+                    setCreateContaExtraDialog(false)
+                }}
+                contaExtra={selectedContaExtra}
+                updateData={getContasCasa}
+            />
         </DashboardFinancasLayout>
       );
 }
