@@ -135,7 +135,7 @@ const ContaExtraDialogForm = (props:any) => {
                             }}
                         >
                             {moradoresOptions.map((morador:Morador)=>{
-                                return <MenuItem value={morador.id}>{morador.nome}</MenuItem>
+                                return <MenuItem key={morador.id} value={morador.id}>{morador.nome}</MenuItem>
                             })}
                         </Select>
                     </FormControl>

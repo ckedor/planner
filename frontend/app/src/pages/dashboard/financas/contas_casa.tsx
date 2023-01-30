@@ -8,7 +8,7 @@ import useForm from "../../../hooks/use-form/use-form.hook";
 import DashboardFinancasLayout from "../../../layouts/dashboard_layout";
 import APIService from "../../../services/api";
 import { ContaExtra, ContasCasa, Morador } from "../../../types/financas";
-import { dateToString, numberToLocaleCurrencyString } from "../../../util/utils";
+import { dateToString, numberToLocaleCurrencyString, sumObjectArrayProperty } from "../../../util/utils";
 import EditIcon from '@mui/icons-material/Edit';
 import ContaExtraDialogForm from "../../../components/financas/contas-casa/conta-extra-dialog-form";
 import AddIcon from '@mui/icons-material/Add';
@@ -78,6 +78,12 @@ const ContasCasa = () => {
             formValues.agua +
             formValues.extra_iptu +
             formValues.caixinha
+        )
+    }
+
+    function calculateExtras(){
+        return (
+            sumObjectArrayProperty(contasExtra, 'valor')
         )
     }
 
@@ -227,6 +233,21 @@ const ContasCasa = () => {
                                     />
                                 </Grid>
 
+                                <Grid item xs={4}>
+                                    <Typography variant="h6" pr={2} sx={{textAlign:'right', fontWeight:'bold'}}>
+                                        {'Extras'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography variant="h6" pr={2} sx={{fontWeight:'bold'}}>
+                                        R$ {calculateExtras()}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={1}></Grid>
+                                <Grid item xs={10}>
+                                    <Divider sx={{borderColor:'black'}}></Divider>
+                                </Grid>
+                                <Grid item xs={1}></Grid>
                                 <Grid item xs={4}>
                                     <Typography variant="h6" pr={2} sx={{textAlign:'right', fontWeight:'bold'}}>
                                         {'Total'}
